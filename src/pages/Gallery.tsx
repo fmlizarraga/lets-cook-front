@@ -1,9 +1,9 @@
-
 import { Button } from 'primereact/button';
+import { GalleryItem } from "../components";
 
-import GalleryItem from "../components/GalleryItem";
+import '../assets/styles/gallery.css';
 
-export default function Gallery() {
+export function Gallery() {
   return (
     <>
     <section className="gallery-content" >

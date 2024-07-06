@@ -1,6 +1,6 @@
 import { Card } from 'primereact/card'
 
-export default function GalleryItem() {
+export function GalleryItem() {
   return (
     <Card title="Post">
     <p className="m-0">

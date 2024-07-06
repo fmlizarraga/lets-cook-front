@@ -1,16 +1,18 @@
-import {Fragment } from 'react/jsx-runtime';
+import { Fragment } from 'react/jsx-runtime';
 import { Button } from 'primereact/button';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 import { Toolbar } from 'primereact/toolbar';
 
+import '../assets/styles/header.css';
+
 interface NavItem {
   label: string;
   icon: string;
 }
 
-export default function Header() {
+export function Header() {
   const navItems: NavItem[] = [
     {
       label: 'Home',
@@ -42,9 +44,9 @@ export default function Header() {
 
   const endContent = (
     <Fragment>
-      <Button icon="pi pi-pinterest" text></Button>
-      <Button icon="pi pi-twitter" text></Button>
-      <Button icon="pi pi-instagram" text></Button>
+      <Button icon="pi pi-pinterest" text />
+      <Button icon="pi pi-twitter" text />
+      <Button icon="pi pi-instagram" text />
     </Fragment>
   );
 
@@ -59,6 +61,7 @@ export default function Header() {
             <InputIcon className="pi pi-search"> </InputIcon>
             <InputText v-model="value1" placeholder="Search" />
           </IconField>
+          <Button icon="pi pi-search" rounded severity='info' />
         </div>
     </div>
   )
