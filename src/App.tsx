@@ -1,11 +1,16 @@
-import Home from './pages/Home.tsx'
+import Header from "./components/Header";
+import Gallery from "./pages/Gallery";
+import 'primereact/resources/themes/lara-dark-indigo/theme.css';
+import 'primeicons/primeicons.css';
 
 function LetsCookApp() {
   return (
     <>
-      <header></header>
+      <header>
+        <Header />
+      </header>
       <main>
-        <Home />
+        <Gallery />
       </main>
       <footer></footer>
     </>

@@ -1,0 +1,90 @@
+/* Header */
+
+.site-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 80%; /* Ajusta el ancho según lo que necesites */
+    max-width: 940px; /* O el tamaño que prefieras */
+  }
+
+  .header-toolbar {
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .header-toolbar .p-button {
+    padding: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .header-toolbar .p-toolbar-group-start,
+  .header-toolbar .p-toolbar-group-center,
+  .header-toolbar .p-toolbar-group-end {
+    flex: 1;
+  }
+
+  .header-toolbar .p-toolbar-group-center {
+    justify-content: center;
+  }
+
+  .header-toolbar .p-toolbar-group-end {
+    justify-content: right;
+  }
+
+  .header-title-container {
+    flex: none;
+  }
+
+  .site-title {
+    margin: 0;
+    border: solid 5px #424b57;
+    background-color: black;
+    color: white;
+    padding: 0.5em;
+    transform: translateY(calc(1.5em - 5px));
+  }
+  
+  .header-picture {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .header-picture img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .header-search-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    transform: translateY(-20px);
+  }
+  
+/* Gallery */
+
+.gallery-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 80%;
+    max-width: 800px;
+  }
+  
+  .gallery-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .gallery-action-container {
+    margin-top: 20px;
+  }
+  
