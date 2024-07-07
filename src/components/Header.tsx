@@ -1,4 +1,5 @@
 import { Fragment } from 'react/jsx-runtime';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
@@ -10,28 +11,37 @@ import '../assets/styles/header.css';
 interface NavItem {
   label: string;
   icon: string;
+  action: string;
 }
 
 export function Header() {
+  const navigate = useNavigate();
   const navItems: NavItem[] = [
     {
       label: 'Home',
-      icon: 'pi pi-home'
+      icon: 'pi pi-home',
+      action: '/home'
     },
     {
       label: 'Blog',
-      icon: 'pi pi-align-left'
+      icon: 'pi pi-align-left',
+      action: '/'
     },
     {
       label: 'About',
-      icon: 'pi pi-question-circle'
+      icon: 'pi pi-question-circle',
+      action: '/'
     },
   ];
 
+  const buttonActionHandler = (action: string) => {
+    navigate(action);
+  }
+
   const startContent = (
     <Fragment>
-      {navItems.map(({ label, icon }) => (
-        <Button key={label} label={label} icon={icon} text />
+      {navItems.map(({ label, icon, action }) => (
+        <Button key={ 'nav-' + label} label={label} icon={icon} text onClick={() => buttonActionHandler(action)} />
       ))}
     </Fragment>
   );

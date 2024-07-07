@@ -1,8 +1,7 @@
 import { Header } from "./components";
-import { Gallery } from "./pages";
-
 import 'primereact/resources/themes/lara-dark-indigo/theme.css';
 import 'primeicons/primeicons.css';
+import AppRouter from "./router/AppRouter";
 
 function LetsCookApp() {
   return (
@@ -11,9 +10,9 @@ function LetsCookApp() {
         <Header />
       </header>
       <main>
-        <Gallery />
+        <AppRouter />
       </main>
-      <footer></footer>
+      <footer />
     </>
   )
 }
