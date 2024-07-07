@@ -1,9 +1,16 @@
+import { useEffect } from 'react';
 import { Button } from 'primereact/button';
 import { GalleryItem } from "../components";
 
 import '../assets/styles/gallery.css';
+import { useBlogStore } from '../hooks';
 
 export function Gallery() {
+  const { loadPosts } = useBlogStore();
+  useEffect(() => {
+    loadPosts();
+  }, [])
+  
   return (
     <>
     <section className="gallery-content" >
