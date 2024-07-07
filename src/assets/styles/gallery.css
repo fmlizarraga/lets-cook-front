@@ -1,20 +1,76 @@
 .gallery-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    width: 80%;
-    max-width: 800px;
-  }
-  
-  .gallery-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-  }
-  
-  .gallery-action-container {
-    margin-top: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 940px;
+}
+
+.gallery-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.gallery-action-container {
+  margin-top: 20px;
+}
+
+.gallery-item {
+  display: flex;
+  align-items: center;
+}
+
+.gallery-item .p-card-header {
+  display: flex;
+  align-items: center;
+}
+
+.gallery-item .p-card-header img {
+  max-width: 400px;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+  margin-right: 1rem;
+}
+
+.gallery-item .p-card-body {
+  flex: 1;
+}
+
+.gallery-item .p-card-content {
+  padding: 0;
+}
+
+.gallery-item .p-card-content p {
+  width: 100%;
+  /* this code clamps based on specified lines */
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  display: -webkit-box;
+}
+
+.post-metadata {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; /* Espacio entre metadata y el título */
+}
+
+.post-meta-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem; /* Espacio entre el avatar y el texto */
+  font-size: 0.5em; /* Tamaño de fuente */
+}
+
+.post-title {
+  display: block;
+  margin-top: 0.5rem; /* Espacio entre metadata y el título */
+}
+
+.author-name, .post-date {
+  margin: 0; /* Sin margen adicional */
+}

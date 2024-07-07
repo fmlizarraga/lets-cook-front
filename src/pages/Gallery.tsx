@@ -6,7 +6,8 @@ import '../assets/styles/gallery.css';
 import { useBlogStore } from '../hooks';
 
 export function Gallery() {
-  const { loadPosts } = useBlogStore();
+  const { loadPosts, posts } = useBlogStore();
+
   useEffect(() => {
     loadPosts();
   }, [])
@@ -16,7 +17,7 @@ export function Gallery() {
     <section className="gallery-content" >
         <h2>Food Blog</h2>
         <div className="gallery-container">
-            <GalleryItem />
+          { posts.map( post => (<GalleryItem key={ "post" + post.id} post={post} />)) }
         </div>
         <div className="gallery-action-container">
             <Button>All Posts</Button>

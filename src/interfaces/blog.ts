@@ -6,7 +6,7 @@ export interface Post {
     title: string;
     summary?: string;
     body: string;
-    date: Date;
+    timeStamp: number;
     tags: Tag[];
     likes: number;
     featuredImage?: string;
@@ -23,31 +23,21 @@ export interface Comment {
   id: string;
   author: string;
   body: string;
-  date: Date;
+  timeStamp: number;
 };
 
-export class Tag {
-  private static tagRegex = /^[a-z]+$/;
-  
-  private constructor(private readonly _value: string) {}
+export interface Tag {
+  value: string;
+}
 
-  static create(str: string): Tag {
-    const cleanedStr = str.toLowerCase().trim();
-    if (!Tag.isValid(cleanedStr)) {
-      throw new Error("Formato incorrecto");
-    }
-    return new Tag(cleanedStr);
-  }
+const tagRegex = /^[a-z]+$/;
 
-  private static isValid(tag: string): boolean {
-    return Tag.tagRegex.test(tag);
-  }
+export const isValidTag = (tag: string): boolean => {
+  return tagRegex.test(tag);
+};
 
-  get value(): string {
-    return this._value;
-  }
-
-  toString(): string {
-    return this._value;
-  }
+export const newTag = (str: string): Tag => {
+  str = str.toLowerCase().trim();
+  if (isValidTag(str)) return { value: str };
+  throw new Error("Formato incorrecto");
 };

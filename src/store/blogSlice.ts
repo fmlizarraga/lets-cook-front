@@ -12,7 +12,7 @@ const EMPTY_POST: Post = {
     author: DEFAULT_AUTHOR,
     title: '',
     body: '',
-    date: new Date(0),
+    timeStamp: 0,
     tags: [],
     likes: 0
 };
