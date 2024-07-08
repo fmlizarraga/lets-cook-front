@@ -21,6 +21,7 @@
 .gallery-item {
   display: flex;
   align-items: center;
+  height: 400px;
 }
 
 .gallery-item .p-card-header {
@@ -29,11 +30,11 @@
 }
 
 .gallery-item .p-card-header img {
-  max-width: 400px;
-  max-height: 400px;
-  width: auto;
-  height: auto;
+  max-width: 420px;
+  height: 400px;
   margin-right: 1rem;
+  object-fit: cover;
+  border-radius: 6px 0 0 6px;
 }
 
 .gallery-item .p-card-body {
@@ -49,28 +50,46 @@
   /* this code clamps based on specified lines */
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 4;
   display: -webkit-box;
 }
 
 .post-metadata {
   display: flex;
   align-items: center;
-  margin-bottom: 1rem; /* Espacio entre metadata y el título */
+  margin-bottom: 1rem;
 }
 
 .post-meta-text {
   display: flex;
   flex-direction: column;
-  margin-left: 0.5rem; /* Espacio entre el avatar y el texto */
-  font-size: 0.5em; /* Tamaño de fuente */
+  margin-left: 0.5rem;
+  font-size: 0.5em;
 }
 
 .post-title {
   display: block;
-  margin-top: 0.5rem; /* Espacio entre metadata y el título */
+  margin-top: 0.5rem;
 }
 
 .author-name, .post-date {
-  margin: 0; /* Sin margen adicional */
+  margin: 0;
+}
+
+.post-footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.likes-container {
+  display: flex;
+  align-items: center;
 }

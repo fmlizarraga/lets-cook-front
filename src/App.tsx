@@ -1,11 +1,12 @@
-import { Header } from "./components";
-import 'primereact/resources/themes/lara-dark-indigo/theme.css';
-import 'primeicons/primeicons.css';
+import { Footer, Header } from "./components";
 import AppRouter from "./router/AppRouter";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { BlogRepositoryProvider } from "./repository";
 import LocalBlogRepository from "./repository/LocalBlogRepository";
+
+import 'primereact/resources/themes/lara-dark-indigo/theme.css';
+import 'primeicons/primeicons.css';
 
 function LetsCookApp() {
   const blogRepository = LocalBlogRepository;
@@ -19,7 +20,9 @@ function LetsCookApp() {
           <main>
             <AppRouter />
           </main>
-          <footer />
+          <footer>
+            <Footer />
+          </footer>
         </BlogRepositoryProvider>
       </Provider>
     </>
