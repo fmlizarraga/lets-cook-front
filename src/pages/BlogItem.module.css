@@ -1,0 +1,15 @@
+.galleryItem p {
+    width: 100%;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    display: -webkit-box;
+}
+
+.galleryItem img {
+    /* max-width: 420px; */
+    height: 300px;
+    margin-right: 1rem;
+    object-fit: cover;
+    border-radius: 6px 6px 0 0;
+}

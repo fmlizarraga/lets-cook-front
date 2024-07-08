@@ -1,0 +1,19 @@
+.galleryContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 940px;
+}
+
+.galleryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.galleryActionContainer {
+  margin-top: 20px;
+}

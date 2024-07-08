@@ -4,11 +4,14 @@ import { Post } from '../interfaces';
 import { Tag } from 'primereact/tag';
 import { Badge } from 'primereact/badge';
 
+import styles from './GalleryItem.module.css';
+
 type PropsTypes = {
   post: Post;
+  className: string;
 };
 
-export function GalleryItem({ post }: PropsTypes) {
+export function GalleryItem({ post, className }: PropsTypes) {
   const tagsToShow = post.tags.slice(0, 3).map(tag => tag.value);
 
   const header = (
@@ -17,28 +20,28 @@ export function GalleryItem({ post }: PropsTypes) {
 
   const postHeader = (
     <>
-      <div className="post-metadata">
+      <div className={styles.postMetadata}>
         <Avatar 
           className='post-author-avatar'
           icon="pi pi-user"
           size="normal"
           shape="circle"
         />
-        <div className="post-meta-text">
-          <span className="author-name">{post.author.name}</span>
-          <span className="post-date">{new Date(post.timeStamp).toLocaleDateString()}</span>
+        <div className={styles.postMetaText}>
+          <span className={styles.authorName}>{post.author.name}</span>
+          <span className={styles.postDate}>{new Date(post.timeStamp).toLocaleDateString()}</span>
         </div>
       </div>
-      <span className="post-title">{post.title}</span>
+      <span className={styles.postTitle}>{post.title}</span>
     </>
   );
 
   const postFooter = (
-    <div className="post-footer-content">
-      <div className="tag-container">
+    <div className={styles.postFooterContent}>
+      <div className={styles.tagContainer}>
         { tagsToShow.map(tag => (<Tag key={tag} value={tag} icon="pi pi-tag" rounded></Tag>) )}
       </div>
-      <div className="likes-container">
+      <div className={styles.likesContainer}>
         <i className='pi pi-heart-fill' style={{fontSize: '1.8rem', color: 'var(--red-400)'}} >
           <Badge value={post.likes} size='normal' style={{
             transform: 'translate(-1.65rem, -0.45rem)',
@@ -54,13 +57,16 @@ export function GalleryItem({ post }: PropsTypes) {
 
   return (
     <Card
-      className='gallery-item'
+      className={className}
       title={ postHeader } 
       subTitle={ post.summary }
       header={header}
       footer={postFooter}
+      pt={{
+        body: {className: styles.galleryItemBody}
+      }}
     >
-      <p className="m-0">
+      <p>
         {post.body}
       </p>
     </Card>

@@ -1,0 +1,43 @@
+.galleryItemBody {
+    flex: 1;
+}
+
+.postMetadata {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.postMetaText {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+    font-size: 0.5em;
+}
+
+.postTitle {
+    display: block;
+    margin-top: 0.5rem;
+}
+
+.authorName, .postDate {
+    margin: 0;
+}
+
+.postFooterContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+
+.tagContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.likesContainer {
+    display: flex;
+    align-items: center;
+}

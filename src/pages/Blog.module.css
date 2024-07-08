@@ -1,0 +1,29 @@
+.blogContainer {
+  width: 80%;
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.blogHeader ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  padding: 0;
+}
+
+.blogHeader ul li {
+  margin: 0 1rem;
+}
+
+.blogHeader ul li a {
+  text-decoration: none;
+  color: #ececec;
+}
+
+.galleryContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}

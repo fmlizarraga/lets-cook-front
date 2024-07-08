@@ -1,29 +1,35 @@
 import { useEffect } from 'react';
-import { Button } from 'primereact/button';
 import { GalleryItem } from "../components";
-
-import '../assets/styles/gallery.css';
 import { useBlogStore } from '../hooks';
+import { Link } from 'react-router-dom';
+import styles from './Gallery.module.css';
+import galleryItemStyles from './GalleryItem.module.css';
 
 export function Gallery() {
   const { loadPosts, posts } = useBlogStore();
 
   useEffect(() => {
     loadPosts();
-  }, [])
+  }, []);
   
   return (
     <>
-    <section className="gallery-content" >
+      <section className={styles.galleryContent}>
         <h2>Food Blog</h2>
-        <div className="gallery-container">
-          { posts.map( post => (<GalleryItem key={ "post" + post.id} post={post} />)) }
+        <div className={styles.galleryContainer}>
+          {posts.map(post => (
+            <GalleryItem
+            key={'post' + post.id}
+            post={post}
+            className={galleryItemStyles.galleryItem}
+            />
+          ))}
         </div>
-        <div className="gallery-action-container">
-            <Button>All Posts</Button>
+        <div className={styles.galleryActionContainer}>
+          <Link className='p-button' to='/blog'>All Posts</Link>
         </div>
-    </section>
-    <section className="about"></section>
+      </section>
+      <section className={styles.about}></section>
     </>
-  )
+  );
 }

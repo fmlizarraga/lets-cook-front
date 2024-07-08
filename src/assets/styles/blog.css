@@ -1,0 +1,30 @@
+.blog-container {
+    width: 80%;
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 1rem;
+    align-items: center;
+}
+
+.blog-header ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+}
+
+.blog-header ul li {
+    margin: 0 1rem;
+}
+
+.blog-header ul li a {
+    text-decoration: none;
+    color: #f8f7f7;
+}
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
