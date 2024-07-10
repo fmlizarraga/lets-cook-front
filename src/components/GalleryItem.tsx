@@ -1,10 +1,11 @@
 import { Card } from 'primereact/card';
 import { Avatar } from 'primereact/avatar';
-import { Post } from '../interfaces';
+import { Post, getNTagsAsStrings } from '../interfaces';
 import { Tag } from 'primereact/tag';
 import { Badge } from 'primereact/badge';
 
 import styles from './GalleryItem.module.css';
+import { useNavigate } from 'react-router-dom';
 
 type PropsTypes = {
   post: Post;
@@ -12,17 +13,22 @@ type PropsTypes = {
 };
 
 export function GalleryItem({ post, className }: PropsTypes) {
-  const tagsToShow = post.tags.slice(0, 3).map(tag => tag.value);
+  const tagsToShow = getNTagsAsStrings(post.tags, 3);
+
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate("/blog/posts/" + post.id);
+  };
 
   const header = (
-    <img src={post.featuredImage} alt={post.title} />
+    <img src={post.featuredImage} alt={post.title} onClick={handleCardClick} />
   );
 
   const postHeader = (
     <>
       <div className={styles.postMetadata}>
         <Avatar 
-          className='post-author-avatar'
           icon="pi pi-user"
           size="normal"
           shape="circle"
@@ -32,7 +38,7 @@ export function GalleryItem({ post, className }: PropsTypes) {
           <span className={styles.postDate}>{new Date(post.timeStamp).toLocaleDateString()}</span>
         </div>
       </div>
-      <span className={styles.postTitle}>{post.title}</span>
+      <span className={styles.postTitle} onClick={handleCardClick} >{post.title}</span>
     </>
   );
 
@@ -63,7 +69,8 @@ export function GalleryItem({ post, className }: PropsTypes) {
       header={header}
       footer={postFooter}
       pt={{
-        body: {className: styles.galleryItemBody}
+        body: {className: styles.galleryItemBody},
+        header: {className: styles.galleryItemPicture}
       }}
     >
       <p>

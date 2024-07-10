@@ -1,0 +1,32 @@
+.commentBoxInnerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px 30px 50px 20px;
+}
+
+.commentBoxInnerBody {
+    width: calc(100% - 60px);
+    height: 100%;
+}
+
+.commentBoxInnerContent {
+    padding: 0 10px;
+}
+
+.commentBoxHeader {
+    border-bottom: solid 1px var(--primary-900);
+    margin-bottom: 36px;
+}
+
+.commentBoxHeader h2 {
+    font-size: 1rem;
+    margin-bottom: 1em;
+}
+
+.newComment button {
+    width: 100%;
+    text-align: start;
+    color: var(--bluegray-600);
+}

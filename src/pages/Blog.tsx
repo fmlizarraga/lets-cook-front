@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { GalleryItem } from "../components";
 import { useBlogStore } from "../hooks";
 import styles from './Blog.module.css';
-import galleryItemStyles from './BlogItem.module.css';
 
 export function Blog() {
   const { posts } = useBlogStore();
@@ -23,7 +22,7 @@ export function Blog() {
             <GalleryItem
             key={'post' + post.id}
             post={post}
-            className={galleryItemStyles.galleryItem}
+            className={styles.galleryItem}
             />
           ))}
         </section>
