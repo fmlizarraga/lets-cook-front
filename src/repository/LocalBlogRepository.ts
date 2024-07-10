@@ -43,9 +43,19 @@ const DEMO_POSTS: Post[] = [
         body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, odit saepe? Hic amet enim recusandae eligendi. In impedit, cum tempora praesentium itaque suscipit, sed placeat explicabo aspernatur veritatis assumenda facilis at molestiae blanditiis possimus incidunt hic culpa tenetur quo sint quos. Vel, doloremque? Autem aliquam non adipisci. Deserunt, nam dolorem? Eum vel neque quo voluptas? Ad nemo sequi eveniet quam, dolorem voluptatum totam fugiat autem iure officiis, deserunt quae adipisci sit eaque odio eius minus tenetur consequuntur veniam vero laboriosam esse libero? Neque aperiam earum animi quaerat non aliquid qui architecto, illo corporis hic? Et adipisci ea sed nam, enim eum cumque dolorum, eaque eligendi atque suscipit! Harum facere neque rem eligendi amet dolorum est corrupti tempora. Fugit, id. Fuga ab velit facere ad unde numquam similique debitis delectus quos illo vitae odio provident ipsa repellendus corrupti impedit sed ex quo, nulla facilis praesentium molestias esse eligendi! Debitis sequi illum reiciendis praesentium quod optio libero non? Enim perferendis accusantium tenetur hic nemo suscipit, laboriosam odio nulla alias libero quis voluptas ex quisquam eos? Accusamus repudiandae magnam temporibus inventore dolor corporis quidem rem, soluta corrupti perspiciatis facilis quae, sapiente iusto impedit neque velit quo quis? Ipsam consectetur earum omnis, reiciendis, eligendi deserunt molestiae error voluptate sequi, maxime consequatur iusto eos! Inventore est hic esse vel consequatur quas quaerat earum totam accusamus, voluptatibus iure adipisci perferendis soluta maxime, eligendi ipsam optio odio quis tempore recusandae. Minus mollitia, eligendi soluta esse similique earum iure qui tenetur maxime molestias explicabo ipsam delectus facere quos commodi dolorem ab repudiandae saepe laboriosam architecto? Ea optio aperiam, molestias quod quia vel omnis accusantium ipsum esse officia sed voluptas iusto quam tempore temporibus non illum reprehenderit tempora fuga natus excepturi minima! Mollitia laudantium ullam et similique eum pariatur soluta, repudiandae minus earum dolore tempore amet excepturi cupiditate ipsam.',
         timeStamp: 1699995555555,
         featuredImage: 'https://upload.wikimedia.org/wikipedia/commons/2/26/Essene_Bread_70pct_Rye_Sproud_30pct_Spelt_cut.JPG',
-        likes: 0,
+        likes: 3,
         tags: [DEMO_TAGS[3], DEMO_TAGS[1], DEMO_TAGS[4]],
-        status: 'Approved'
+        status: 'Approved',
+        comments: [
+            {
+                id: 'cmnt0001',
+                author: DEMO_USERS[0],
+                body: 'Hello! This is a comment.',
+                likes: 0,
+                status: 'Approved',
+                timeStamp: 1699995557555,
+            }
+        ]
     },
     {
         id: 'aabbcc0002',

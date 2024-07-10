@@ -63,7 +63,7 @@
     display: flex;
     justify-content: space-between;
     padding: 1rem 0;
-    border-top: solid 1px var(--primary-900);
+    border-top: solid 1px var(--surface-border);
 }
 
 .shareLinks ul {

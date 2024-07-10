@@ -22,7 +22,7 @@ export interface BlogState {
 
 export interface Comment {
   id?: string;
-  author: string;
+  author: User;
   body: string;
   status: PostStatus;
   likes: number;

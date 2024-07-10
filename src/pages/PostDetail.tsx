@@ -120,7 +120,7 @@ export function PostDetail() {
             </Card>
         </article>
         <div className={styles.commentBox}>
-          <CommentSection />
+          <CommentSection comments={post.comments || []} />
         </div>
       </>
     );
