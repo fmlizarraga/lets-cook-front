@@ -5,7 +5,7 @@ const DEFAULT_AUTHOR: User = {
     id: "",
     name: "Unknown",
     email: "",
-    group: "guest"
+    group: "Member"
 };
 
 const EMPTY_POST: Post = {
@@ -14,7 +14,8 @@ const EMPTY_POST: Post = {
     body: '',
     timeStamp: 0,
     tags: [],
-    likes: 0
+    likes: 0,
+    status: 'Approved'
 };
 
 const INITIAL_STATE: BlogState = {

@@ -11,6 +11,7 @@ export interface Post {
     likes: number;
     featuredImage?: string;
     comments?: Comment[];
+    status: PostStatus;
 };
 
 export interface BlogState {
@@ -20,15 +21,20 @@ export interface BlogState {
 };
 
 export interface Comment {
-  id: string;
+  id?: string;
   author: string;
   body: string;
+  status: PostStatus;
+  likes: number;
   timeStamp: number;
 };
 
+export type PostStatus = 'Pending' | 'Approved' | 'Hidden' | 'Deleted' | 'Pinned' | 'Flagged';
+
 export interface Tag {
   value: string;
-}
+  visualName?: string;
+};
 
 const tagRegex = /^[a-z0-9-_]+$/;
 
