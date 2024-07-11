@@ -5,7 +5,7 @@ const DEFAULT_USER: User = {
     id: "",
     name: "Guest",
     email: "",
-    group: "guest"
+    group: "Guest"
 };
 
 const INITIAL_STATE: AuthState = {

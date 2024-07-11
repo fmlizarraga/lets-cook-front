@@ -10,7 +10,7 @@ export const useBlogStore = () => {
     const { blogRepository } = useRepository();
     const {getPosts, createPost, updatePost, deletePost} = blogRepository.repository;
 
-    const token = `Bearer ${localStorage.getItem('token')}`;
+    const token = localStorage.getItem('token') || '';
 
     const loadPosts = async () => {
         const posts = await getPosts(token);

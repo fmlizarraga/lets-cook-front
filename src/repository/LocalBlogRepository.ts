@@ -87,8 +87,20 @@ const LocalBlogRepository: BlogRepository = {
         }
         return newPost;
     },
-    updatePost: async (post: Post, token: string) => { return post },
-    deletePost: async (postId: string, token: string) => { return }
+    updatePost: async (post: Post, token: string) => {
+        DEMO_POSTS.map(curr => {
+            if(curr.id === post.id) return post
+            return curr;
+        });
+        return post
+    },
+    deletePost: async (postId: string, token: string) => {
+        DEMO_POSTS.map(curr => {
+            if(curr.id === postId) return {...curr, status:'Deleted'};
+            return curr;
+        });
+        return;
+    },
 };
 
 export default LocalBlogRepository;
