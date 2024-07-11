@@ -3,7 +3,7 @@ import { Post } from "../interfaces";
 
 
 export interface BlogRepository {
-    getPosts: (token: string) => Promise<Post[]>;
+    getPosts: () => Promise<Post[]>;
     createPost: (post: Post, token: string) => Promise<Post>;
     updatePost: (post: Post, token: string) => Promise<Post>;
     deletePost: (postId: string, token: string) => Promise<void>;

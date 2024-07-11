@@ -1,4 +1,4 @@
-import { Footer, Header } from "./components";
+import { Footer, Header, LoaderStatus } from "./components";
 import AppRouter from "./router/AppRouter";
 import { Provider } from "react-redux";
 import { store } from "./store";
@@ -18,6 +18,7 @@ function LetsCookApp() {
             <Header />
           </header>
           <main>
+            <LoaderStatus />
             <AppRouter />
           </main>
           <footer>

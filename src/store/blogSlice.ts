@@ -50,7 +50,7 @@ export const blogSlice = createSlice({
         onClearActivePost: (state) => {
             state.activePost = EMPTY_POST;
         },
-        onFilterByTags: (state, action: PayloadAction<FilterByTagsAction>) => {
+        onSetTagsFilter: (state, action: PayloadAction<FilterByTagsAction>) => {
             state.tagFilter = action.payload.tagFilter;
         },
         onLoadPosts: (state, action: PayloadAction<LoadPostsAction>) => {
@@ -82,7 +82,7 @@ export const blogSlice = createSlice({
 export const {
     onSetActivePost,
     onClearActivePost,
-    onFilterByTags,
+    onSetTagsFilter,
     onLoadPosts,
     onClearPosts,
     onCreatePost,

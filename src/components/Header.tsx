@@ -7,8 +7,6 @@ import { InputText } from 'primereact/inputtext';
 import { Toolbar } from 'primereact/toolbar';
 
 import '../assets/styles/header.css';
-import { useBlogStore } from '../hooks';
-import { useEffect } from 'react';
 
 interface NavItem {
   label: string;
@@ -17,10 +15,7 @@ interface NavItem {
 }
 
 export function Header() {
-  const { loadPosts } = useBlogStore();
-  useEffect(() => {
-    loadPosts();
-  }, []);  
+   
   const navItems: NavItem[] = [
     {
       label: 'Home',

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootStore, onLogin, onLogout } from "../store";
+import { RootStore, onLogin, onLogout, onClearPosts } from "../store";
 import { useRepository } from "./useRepository";
 import { User } from "../interfaces";
 
@@ -20,12 +20,13 @@ export const useAuthStore = () => {
     
             dispatch(onLogin({user: loginResult.user}));
         } catch (error) {
-            console.log(error);
+            console.error(error);
             throw new Error('The task failed to complete, please try again later.');
         }
     };
 
     const logout = () => {
+        dispatch(onClearPosts());
         dispatch(onLogout());
     };
 
@@ -35,7 +36,7 @@ export const useAuthStore = () => {
     
             if (result instanceof Error) throw result;
         } catch (error) {
-            console.log(error);
+            console.error(error);
             throw new Error('The task failed to complete, please try again later.');
         }
     };
@@ -53,7 +54,7 @@ export const useAuthStore = () => {
 
             localStorage.setItem('token', checkResult);
         } catch (error) {
-            console.log(error);
+            console.error(error);
             throw new Error('The task failed to complete, please try again later.');
         }
     };

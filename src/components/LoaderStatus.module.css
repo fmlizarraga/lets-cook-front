@@ -1,0 +1,44 @@
+.messageBanner {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.messageBanner ul {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 940px;
+    list-style: none;
+    padding: 0;
+}
+
+.messageBanner ul li {
+    margin-bottom: 10px;
+    background-color: var(--surface-c);
+    color: var(--text-color-secondary);
+    font-weight: 700;
+    width: 100%;
+    padding: var(--content-padding);
+    border: solid 3px var(--surface-border);
+    border-radius: var(--border-radius);
+}
+
+.messageBanner ul.errorList li {
+    background-color: var(--red-900);
+    color: var(--red-300);
+    border-color: var(--red-700);
+}
+
+.messageBanner ul.infoList li {
+    background-color: var(--primary-900);
+    color: var(--primary-300);
+    border-color: var(--primary-700);
+}
+
+.messageBanner ul.successList li {
+    background-color: var(--green-800);
+    color: var(--green-100);
+    border-color: var(--green-500);
+}

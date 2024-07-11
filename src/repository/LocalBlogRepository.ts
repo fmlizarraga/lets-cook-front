@@ -72,7 +72,7 @@ const DEMO_POSTS: Post[] = [
 ];
 
 const LocalBlogRepository: BlogRepository = {
-    getPosts: async (token: string) => { return DEMO_POSTS },
+    getPosts: async () => { return DEMO_POSTS },
     createPost: async (post:Post, token: string) => {
         const postId = 'aabbcc' + (DEMO_POSTS.length + 1).toLocaleString(
             'en-US',
