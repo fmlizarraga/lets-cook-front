@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Blog, Gallery, PostDetail } from "../pages";
+import { Blog, Gallery, Login, PostDetail } from "../pages";
 
 export default function AppRouter() {
   return (
@@ -9,6 +9,7 @@ export default function AppRouter() {
           <Route path=":postId" element={<PostDetail/>} />
         </Route>
         <Route path="/blog" element={<Blog/>} />
+        <Route path="/login" element={<Login/>} />
         <Route path="/*" element={<Navigate to="/home"/>} />
     </Routes>
   )
