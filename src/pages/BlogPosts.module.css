@@ -24,10 +24,11 @@
   display: -webkit-box;
 }
 
-.galleryItem img {
+.galleryItemPicture img {
   /* max-width: 420px; */
   height: 300px;
   margin-right: 1rem;
   object-fit: cover;
   border-radius: 6px 6px 0 0;
+  cursor: pointer;
 }

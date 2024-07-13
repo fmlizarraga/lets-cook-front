@@ -2,10 +2,6 @@
     flex: 1;
 }
 
-.galleryItemPicture {
-    cursor: pointer;
-}
-
 .postMetadata {
     display: flex;
     align-items: center;

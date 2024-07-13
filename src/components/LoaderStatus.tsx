@@ -1,18 +1,7 @@
-import { useEffect } from "react";
-import { useBlogStore } from "../hooks";
-
 import styles from './LoaderStatus.module.css';
 
 export function LoaderStatus() {
-    let errors: string[] = [];
-    const { loadPosts } = useBlogStore();
-    useEffect(() => {
-        try {
-            loadPosts();
-        } catch (error) {
-            if(error instanceof Error) errors.push(error.message);
-        }
-    }, []);
+    let errors: string[] = [];    
     let errorMessages = (<></>);
 
     if(errors.length > 0) {

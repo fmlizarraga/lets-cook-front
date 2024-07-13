@@ -1,18 +1,21 @@
+import { useNavigate } from 'react-router-dom';
 import { Card } from 'primereact/card';
 import { Avatar } from 'primereact/avatar';
-import { Post, getNTagsAsStrings } from '../interfaces';
 import { Tag } from 'primereact/tag';
 import { Badge } from 'primereact/badge';
+import { Post, getNTagsAsStrings } from '../interfaces';
 
 import styles from './GalleryItem.module.css';
-import { useNavigate } from 'react-router-dom';
 
 type PropsTypes = {
   post: Post;
-  className: string;
+  classNames: {
+    card: string;
+    image: string;
+  }
 };
 
-export function GalleryItem({ post, className }: PropsTypes) {
+export function GalleryItem({ post, classNames }: PropsTypes) {
   const tagsToShow = getNTagsAsStrings(post.tags, 3);
 
   const navigate = useNavigate();
@@ -28,7 +31,9 @@ export function GalleryItem({ post, className }: PropsTypes) {
   const postHeader = (
     <>
       <div className={styles.postMetadata}>
-        <Avatar 
+        <Avatar
+          image={post.author.picture}
+          imageAlt={post.author.name}
           icon="pi pi-user"
           size="normal"
           shape="circle"
@@ -63,14 +68,14 @@ export function GalleryItem({ post, className }: PropsTypes) {
 
   return (
     <Card
-      className={className}
+      className={classNames.card}
       title={ postHeader } 
       subTitle={ post.summary }
       header={header}
       footer={postFooter}
       pt={{
         body: {className: styles.galleryItemBody},
-        header: {className: styles.galleryItemPicture}
+        header: {className: classNames.image}
       }}
     >
       <p>

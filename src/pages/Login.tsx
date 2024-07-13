@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconField } from "primereact/iconfield";
@@ -7,6 +7,7 @@ import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
+import { useAuthStore } from "../hooks";
 
 import styles from './Login.module.css';
 
@@ -18,12 +19,16 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export function Login() {
+    const { login } = useAuthStore();
+    const navigate = useNavigate();
+    
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(schema)
     });
 
-    const onSubmit: SubmitHandler<FormValues> = data => {
-        console.log(data);
+    const onSubmit: SubmitHandler<FormValues> = ({email, password}) => {
+        login(email, password);
+        navigate('/blog');
     };
 
     return (

@@ -1,10 +1,18 @@
+import { useEffect } from "react";
 import { GalleryItem } from "../components";
 import { useBlogStore } from '../hooks';
 import { Link } from 'react-router-dom';
 import styles from './Gallery.module.css';
 
 export function Gallery() {
-  const { posts } = useBlogStore();
+  const { posts, loadPosts } = useBlogStore();
+  useEffect(() => {
+    try {
+        loadPosts();
+    } catch (error) {
+        if(error instanceof Error) console.error(error);
+    }
+}, []);
 
   return (
     <>
@@ -15,7 +23,7 @@ export function Gallery() {
             <GalleryItem
             key={'post' + post.id}
             post={post}
-            className={styles.galleryItem}
+            classNames={{card: styles.galleryItem, image: styles.galleryItemPicture}}
             />
           ))}
         </div>

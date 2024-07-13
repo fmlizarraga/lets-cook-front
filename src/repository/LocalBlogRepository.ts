@@ -6,7 +6,8 @@ const DEMO_USERS: User[] = [
         id: 'uid0001',
         name: 'Pepe',
         email: 'pepe@mail.com',
-        group: 'Gold'
+        group: 'Gold',
+        picture: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kermit_the_frog_hollywood_walk_of_fame_%286917430870%29.jpg/240px-Kermit_the_frog_hollywood_walk_of_fame_%286917430870%29.jpg'
     },
     {
         id: 'uid0002',

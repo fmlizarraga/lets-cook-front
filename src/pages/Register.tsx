@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Card } from 'primereact/card';
@@ -7,6 +7,7 @@ import { IconField } from 'primereact/iconfield';
 import { InputText } from 'primereact/inputtext';
 import { InputIcon } from 'primereact/inputicon';
 import { Button } from 'primereact/button';
+import { useAuthStore } from '../hooks';
 
 import styles from './Login.module.css';
 
@@ -23,12 +24,17 @@ const schema = z.object({
     password: z.string({ required_error: "The password is required" })
         .min(5, "The password is too short, it must have at least 5 characters")
         .max(64, "The password is too long, it must have no more than 64 characters"),
-    picture: z.union([urlSchema, z.literal('')]).optional()
+    picture: z.union([urlSchema, z.literal('')])
+        .transform((value) => (value === "" ? undefined : value))
+        .optional()
 });
 
 type FormValues = z.infer<typeof schema>;
 
 export function Register() {
+    const { register:registerAction } = useAuthStore();
+    const navigate = useNavigate();
+
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(schema)
     });
@@ -38,8 +44,9 @@ export function Register() {
             errorStrings.push(key + value.message);
         }
 
-    const onSubmit: SubmitHandler<FormValues> = data => {
-        console.log(data);
+    const onSubmit: SubmitHandler<FormValues> = ({name, email, password, picture }) => {
+        registerAction(name, email, password, picture);
+        navigate("/blog");
     };
     return (
         <div className={styles.formContainer}>

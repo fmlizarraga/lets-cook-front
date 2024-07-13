@@ -15,7 +15,7 @@ export function BlogPosts() {
             <GalleryItem
             key={'post' + post.id}
             post={post}
-            className={styles.galleryItem}
+            classNames={{card: styles.galleryItem, image: styles.galleryItemPicture}}
             />
           ))}
         </section>

@@ -30,9 +30,9 @@ export const useAuthStore = () => {
         dispatch(onLogout());
     };
 
-    const register = async (user: User, password: string) => {
+    const register = async (name: string, email: string, password: string, picture?: string) => {
         try {
-            const result = await registerUser(user, password);
+            const result = await registerUser(name,email,password,picture);
     
             if (result instanceof Error) throw result;
         } catch (error) {

@@ -3,7 +3,7 @@ import { User } from "../interfaces";
 
 export interface AuthRepository {
     loginUser: (email: string, password: string) => Promise<{ user: User, token: string } | Error>;
-    registerUser: (user: User, password: string) => Promise<void | Error>;
+    registerUser: (name: string, email:string, password: string, pictureURL?: string) => Promise<void | Error>;
     checkUser: (token: string) => Promise<string | Error>;
 };
 
