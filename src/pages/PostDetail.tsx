@@ -1,17 +1,17 @@
 import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card } from 'primereact/card';
-import { useBlogStore } from "../hooks";
 import { Avatar } from 'primereact/avatar';
-import { Image } from 'primereact/image';
 import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
+import { Image } from 'primereact/image';
 import { Menu } from 'primereact/menu';
 import { MenuItem } from 'primereact/menuitem';
-import { getNTagsAsStrings } from '../interfaces';
 import { Tag } from 'primereact/tag';
+import { useBlogStore } from "../hooks";
+import { getNTagsAsStrings } from '../interfaces';
+import { BlogNav, CommentSection } from '../components';
 
 import styles from './PostDetail.module.css';
-import { CommentSection } from '../components';
 
 export function PostDetail() {
   const { posts } = useBlogStore();
@@ -92,32 +92,35 @@ export function PostDetail() {
     );
     return (
       <>
+        <div className={styles.postHeaderContainer}>
+          <BlogNav />
+        </div>
         <article className={styles.postContainer}>
-            <Card
-              className={styles.postInner}
-              header={ header }
-              title={ post.title }
-              subTitle={ post.summary }
-              footer={footer}
-              pt={{
-                title: {
-                  className: styles.postTitle,
-                },
-                content:{
-                  className: styles.postContent,
-                },
-                subTitle: {
-                  className: styles.postSummary,
-                }
-              }}
-            >
-              <div className={styles.postImgContainer}>
-                <Image className={styles.postImg} src={post?.featuredImage} alt={post?.title} width="500" preview />
-              </div>
-              <p>
-                {post.body}
-              </p>
-            </Card>
+          <Card
+            className={styles.postInner}
+            header={ header }
+            title={ post.title }
+            subTitle={ post.summary }
+            footer={footer}
+            pt={{
+              title: {
+                className: styles.postTitle,
+              },
+              content:{
+                className: styles.postContent,
+              },
+              subTitle: {
+                className: styles.postSummary,
+              }
+            }}
+          >
+            <div className={styles.postImgContainer}>
+              <Image className={styles.postImg} src={post?.featuredImage} alt={post?.title} width="500" preview />
+            </div>
+            <p>
+              {post.body}
+            </p>
+          </Card>
         </article>
         <div className={styles.commentBox}>
           <CommentSection comments={post.comments || []} />

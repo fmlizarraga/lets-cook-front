@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconField } from "primereact/iconfield";
@@ -6,13 +7,12 @@ import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import { Link } from "react-router-dom";
 
 import styles from './Login.module.css';
 
 const schema = z.object({
     email: z.string().min(3, "The email is required").email("Invalid email format"),
-    password: z.string().min(1, "The password is required")
+    password: z.string({required_error: "The password is required"})
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -64,7 +64,7 @@ export function Login() {
                         <Button label="Login" type="submit" />
                     </div>
                 </form>
-                <Link to={"/register"}>I don't have an account yet.</Link>
+                <Link to={"/auth/register"}>I don't have an account yet.</Link>
             </Card>
         </div>
     );

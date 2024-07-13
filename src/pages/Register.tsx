@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Card } from 'primereact/card';
@@ -10,11 +10,20 @@ import { Button } from 'primereact/button';
 
 import styles from './Login.module.css';
 
+const urlSchema = z.string().max(255, "The URL is too long, it must contain less than 256 characters").url("Invalid URL format");
+
 const schema = z.object({
-    name: z.string().min(3, "The name must have at least 3 letters").max(64, "The name cannot have more than 64 letters"),
-    email: z.string().min(3, "The email is required").email("Invalid email format"),
-    password: z.string().min(1, "The password is required"),
-    picture: z.string().url()
+    name: z.string()
+        .trim().toLowerCase()
+        .min(3, "The name must have at least 3 letters")
+        .max(64, "The name cannot have more than 64 letters"),
+    email: z.string({ required_error: "The email is required" })
+        .min(5, "This email seems to be too short for a real email")
+        .email("Invalid email format"),
+    password: z.string({ required_error: "The password is required" })
+        .min(5, "The password is too short, it must have at least 5 characters")
+        .max(64, "The password is too long, it must have no more than 64 characters"),
+    picture: z.union([urlSchema, z.literal('')]).optional()
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -23,6 +32,11 @@ export function Register() {
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(schema)
     });
+
+    const errorStrings: string[] = [];
+    for (const [key,value] of Object.entries(errors)) {
+            errorStrings.push(key + value.message);
+        }
 
     const onSubmit: SubmitHandler<FormValues> = data => {
         console.log(data);
@@ -85,7 +99,7 @@ export function Register() {
                         <Button label="Register" type="submit" />
                     </div>
                 </form>
-                <Link to={"/login"}>I already have an account.</Link>
+                <Link to={"/auth/login"}>I already have an account.</Link>
             </Card>
         </div>
     )

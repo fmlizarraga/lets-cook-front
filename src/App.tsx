@@ -5,7 +5,7 @@ import { store } from "./store";
 import { BlogRepositoryProvider } from "./repository";
 import LocalBlogRepository from "./repository/LocalBlogRepository";
 
-import 'primereact/resources/themes/lara-dark-indigo/theme.css';
+import 'primereact/resources/themes/lara-dark-amber/theme.css';
 import 'primeicons/primeicons.css';
 
 function LetsCookApp() {

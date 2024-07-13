@@ -1,5 +1,5 @@
 export * from './Login';
 export * from './Register';
-export * from './Blog';
+export * from './BlogPosts';
 export * from './Gallery';
 export * from './PostDetail';

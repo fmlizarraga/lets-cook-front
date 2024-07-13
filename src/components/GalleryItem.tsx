@@ -18,7 +18,7 @@ export function GalleryItem({ post, className }: PropsTypes) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate("/blog/posts/" + post.id);
+    navigate("/blog/" + post.id);
   };
 
   const header = (

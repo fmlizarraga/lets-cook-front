@@ -25,7 +25,7 @@ export function Header() {
     {
       label: 'Blog',
       icon: 'pi pi-align-left',
-      action: '/blog'
+      action: '/blog/posts'
     },
     {
       label: 'About',
