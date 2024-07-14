@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
@@ -7,7 +8,7 @@ import { IconField } from 'primereact/iconfield';
 import { InputText } from 'primereact/inputtext';
 import { InputIcon } from 'primereact/inputicon';
 import { Button } from 'primereact/button';
-import { useAuthStore } from '../hooks';
+import { useAuthStore, useUIStore } from '../hooks';
 
 import styles from './Login.module.css';
 
@@ -33,6 +34,7 @@ type FormValues = z.infer<typeof schema>;
 
 export function Register() {
     const { register:registerAction } = useAuthStore();
+    const { pushMessage, setMessages } = useUIStore();
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
@@ -45,9 +47,24 @@ export function Register() {
         }
 
     const onSubmit: SubmitHandler<FormValues> = ({name, email, password, picture }) => {
-        registerAction(name, email, password, picture);
-        navigate("/blog");
+        try {
+            registerAction(name, email, password, picture);
+            navigate("/blog");
+        } catch (error) {
+            if(error instanceof Error) pushMessage('error', error.message);
+            return;
+        }
     };
+
+    useEffect(() => {
+        const error: string[] = [];
+        if(errors.name?.message) error.push(errors.name.message);
+        if(errors.email?.message) error.push(errors.email.message);
+        if(errors.password?.message) error.push(errors.password.message);
+        if(errors.picture?.message) error.push(errors.picture.message);
+        setMessages({error});
+    }, [errors]);
+
     return (
         <div className={styles.formContainer}>
             <Card
@@ -62,7 +79,6 @@ export function Register() {
             >
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={styles.formSection}>
-                        {errors.name && <span>{errors.name.message}</span>}
                         <IconField iconPosition="left">
                             <InputIcon className="pi pi-user"></InputIcon>
                             <InputText
@@ -72,7 +88,6 @@ export function Register() {
                         </IconField>
                     </div>
                     <div className={styles.formSection}>
-                        {errors.email && <span>{errors.email.message}</span>}
                         <IconField iconPosition="left">
                             <InputIcon className="pi pi-envelope"></InputIcon>
                             <InputText
@@ -82,7 +97,6 @@ export function Register() {
                         </IconField>
                     </div>
                     <div className={styles.formSection}>
-                        {errors.password && <span>{errors.password.message}</span>}
                         <IconField iconPosition="left">
                             <InputIcon className="pi pi-key"></InputIcon>
                             <InputText
@@ -93,7 +107,6 @@ export function Register() {
                         </IconField>
                     </div>
                     <div className={styles.formSection}>
-                        {errors.picture && <span>{errors.picture.message}</span>}
                         <IconField iconPosition="left">
                             <InputIcon className="pi pi-image"></InputIcon>
                             <InputText

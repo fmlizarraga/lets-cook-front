@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootStore, onLogin, onLogout, onClearPosts } from "../store";
 import { useRepository } from "./useRepository";
-import { User } from "../interfaces";
 
 export const useAuthStore = () => {
     const { authStatus, user } = useSelector((state: RootStore) => state.auth);
@@ -14,13 +13,17 @@ export const useAuthStore = () => {
         try {
             const loginResult = await loginUser(email, password);
     
-            if (loginResult instanceof Error) throw loginResult;
+            if (loginResult instanceof Error) {
+                loginResult.name = 'authError';
+                throw loginResult;
+            }
     
             localStorage.setItem('token', loginResult.token);
     
             dispatch(onLogin({user: loginResult.user}));
         } catch (error) {
             console.error(error);
+            if(error instanceof Error && error.name === 'authError') throw error;
             throw new Error('The task failed to complete, please try again later.');
         }
     };

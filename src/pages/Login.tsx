@@ -7,29 +7,43 @@ import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import { useAuthStore } from "../hooks";
+import { useAuthStore, useUIStore } from "../hooks";
 
 import styles from './Login.module.css';
+import { useEffect } from "react";
 
 const schema = z.object({
-    email: z.string().min(3, "The email is required").email("Invalid email format"),
-    password: z.string({required_error: "The password is required"})
+    email: z.string().min(1, "The email is required").email("Invalid email format"),
+    password: z.string().min(1,"The password is required")
 });
 
 type FormValues = z.infer<typeof schema>;
 
 export function Login() {
     const { login } = useAuthStore();
+    const { pushMessage, setMessages } = useUIStore();
     const navigate = useNavigate();
     
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
         resolver: zodResolver(schema)
     });
 
-    const onSubmit: SubmitHandler<FormValues> = ({email, password}) => {
-        login(email, password);
-        navigate('/blog');
+    const onSubmit: SubmitHandler<FormValues> = async ({email, password}) => {
+        try {
+            await login(email, password);
+            navigate('/blog');
+        } catch (error) {
+            if(error instanceof Error) pushMessage('error', error.message);
+            return;
+        }
     };
+    
+    useEffect(() => {
+        const error: string[] = [];
+        if(errors.email?.message) error.push(errors.email.message);
+        if(errors.password?.message) error.push(errors.password.message);
+        setMessages({error});
+    }, [errors]);
 
     return (
         <div className={styles.formContainer}>
@@ -45,7 +59,6 @@ export function Login() {
             >
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className={styles.formSection}>
-                        {errors.email && <span>{errors.email.message}</span>}
                         <IconField iconPosition="left">
                             <InputIcon className="pi pi-envelope"></InputIcon>
                             <InputText
@@ -55,7 +68,6 @@ export function Login() {
                         </IconField>
                     </div>
                     <div className={styles.formSection}>
-                        {errors.password && <span>{errors.password.message}</span>}
                         <IconField iconPosition="left">
                             <InputIcon className="pi pi-key"></InputIcon>
                             <InputText

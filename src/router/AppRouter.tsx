@@ -3,9 +3,12 @@ import { BlogPosts, Gallery, Login, PostDetail, Register } from "../pages";
 import { Auth, Blog, Home } from "../layouts";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
+import { NavigationListener } from "../components";
 
 export default function AppRouter() {
   return (
+    <>
+    <NavigationListener/>
     <Routes>
       <Route path="/" element={<Home/>} >
         <Route path="home" element={<Gallery/>} />
@@ -32,5 +35,6 @@ export default function AppRouter() {
       </Route>
       <Route path="/*" element={<Navigate to="/"/>} />
     </Routes>
+    </>
   );
 };
