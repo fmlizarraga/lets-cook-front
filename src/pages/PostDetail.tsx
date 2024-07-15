@@ -10,6 +10,7 @@ import { Tag } from 'primereact/tag';
 import { useBlogStore } from "../hooks";
 import { getNTagsAsStrings } from '../interfaces';
 import { BlogNav, CommentSection } from '../components';
+import { sanitizeHTML } from '../utils/blog';
 
 import styles from './PostDetail.module.css';
 
@@ -117,9 +118,10 @@ export function PostDetail() {
             <div className={styles.postImgContainer}>
               <Image className={styles.postImg} src={post?.featuredImage} alt={post?.title} width="500" preview />
             </div>
-            <p>
-              {post.body}
-            </p>
+            <div
+              className={styles.postBodyContent}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.body) }}
+            />
           </Card>
         </article>
         <div className={styles.commentBox}>

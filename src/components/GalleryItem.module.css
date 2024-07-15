@@ -19,6 +19,25 @@
     display: block;
     margin-top: 0.5rem;
     cursor: pointer;
+    transition: color 0.3s;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+}
+
+.postSubTitle {
+    cursor: pointer;
+    transition: color 0.3s;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+}
+
+.postTitle:hover,
+.postSubTitle:hover {
+    color: var(--primary-color);
 }
 
 .authorName, .postDate {
@@ -42,3 +61,13 @@
     display: flex;
     align-items: center;
 }
+
+.postBodyContent {
+    height: 140px;
+    width: 100%;
+    overflow: hidden;
+    background: -webkit-linear-gradient(var(--text-color), rgba(212, 4, 4, 0));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }

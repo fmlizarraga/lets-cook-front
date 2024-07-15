@@ -37,10 +37,3 @@
   padding: 0;
 }
 
-.galleryItem p {
-  width: 100%;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  display: -webkit-box;
-}

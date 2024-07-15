@@ -1,18 +1,19 @@
-import { Card } from 'primereact/card';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { Editor } from 'primereact/editor';
-import { Chips } from 'primereact/chips';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from 'primereact/button';
-import { useState, useEffect } from 'react';
-import { useAuthStore, useBlogStore, useUIStore } from '../hooks';
+import { Card } from 'primereact/card';
+import { Chips } from 'primereact/chips';
+import { Editor } from 'primereact/editor';
+import { InputText } from 'primereact/inputtext';
+import { InputTextarea } from 'primereact/inputtextarea';
+import DOMPurify from 'dompurify';
 import { Tag, newTag } from '../interfaces';
+import { useAuthStore, useBlogStore, useUIStore } from '../hooks';
 
 import styles from './PostForm.module.css';
-import { useNavigate } from 'react-router-dom';
 
 const schema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -46,6 +47,7 @@ export function PostForm() {
     try {
       const validatedTags: Tag[] = tags.map(tag => newTag(tag));
       data.tags = validatedTags.map(tag => tag.value);
+      data.body = DOMPurify.sanitize(data.body);
       if (formAction === 'create') {
         savePost({
           author: user,

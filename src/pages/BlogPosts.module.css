@@ -16,14 +16,6 @@
   margin-top: 2rem;
 }
 
-.galleryItem p {
-  width: 100%;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  display: -webkit-box;
-}
-
 .galleryItemPicture img {
   /* max-width: 420px; */
   height: 300px;

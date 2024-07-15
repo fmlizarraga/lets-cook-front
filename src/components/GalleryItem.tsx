@@ -4,6 +4,7 @@ import { Avatar } from 'primereact/avatar';
 import { Tag } from 'primereact/tag';
 import { Badge } from 'primereact/badge';
 import { Post, getNTagsAsStrings } from '../interfaces';
+import { sanitizeHTML } from '../utils/blog';
 
 import styles from './GalleryItem.module.css';
 
@@ -74,13 +75,19 @@ export function GalleryItem({ post, classNames }: PropsTypes) {
       header={header}
       footer={postFooter}
       pt={{
+        header: {className: classNames.image},
         body: {className: styles.galleryItemBody},
-        header: {className: classNames.image}
+        subTitle: {
+          className: styles.postSubTitle,
+          onClick: handleCardClick
+        },
+        content: {style:{paddingTop:0}}
       }}
     >
-      <p>
-        {post.body}
-      </p>
+      <div
+        className={styles.postBodyContent}
+        dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.body) }}
+      />
     </Card>
   )
 };
