@@ -4,9 +4,11 @@ import { useUIStore } from '../hooks/useUIStore';
 
 export const NavigationListener = () => {
     const location = useLocation();
-    const { clearMessages } = useUIStore();
+    const { clearMessages, setEditorAction } = useUIStore();
 
     useEffect(() => {
+        if(location.pathname === '/blog/new') setEditorAction('create');
+        else if(location.pathname.includes('/blog/edit')) setEditorAction('edit');
         clearMessages();
     }, [location]);
 

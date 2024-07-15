@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootStore, onSetMessages, onClearMessages } from "../store";
+import { RootStore, onSetMessages, onClearMessages, onSetFormAction } from "../store";
+import { FormActionType } from "../interfaces";
 
 type MessagesParams = {
     info?: string[];
@@ -10,7 +11,7 @@ type MessagesParams = {
 type MsgType = 'info' | 'success' | 'error';
 
 export const useUIStore = () => {
-    const { messages } = useSelector((state: RootStore) => state.ui);
+    const { messages, formAction } = useSelector((state: RootStore) => state.ui);
     const dispatch = useDispatch();
 
     const setMessages = ({ info, success, error }: MessagesParams) => {
@@ -36,13 +37,19 @@ export const useUIStore = () => {
         dispatch(onSetMessages({ ...messages, [msgType]: updatedMessages }));
     };
 
+    const setEditorAction = (action: FormActionType) => {
+        dispatch(onSetFormAction(action));
+    }
+
     return {
         // Properties
         messages,
+        formAction,
         // Methods
         setMessages,
         clearMessages,
         pushMessage,
-        popOldMessage
+        popOldMessage,
+        setEditorAction,
     };
 };

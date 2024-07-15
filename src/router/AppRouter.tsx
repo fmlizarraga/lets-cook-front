@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { BlogPosts, Gallery, Login, PostDetail, Register } from "../pages";
+import { BlogPosts, Gallery, Login, PostDetail, PostForm, Register } from "../pages";
 import { Auth, Blog, Home } from "../layouts";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
@@ -17,7 +17,7 @@ export default function AppRouter() {
           <Route path="posts" element={<BlogPosts/>} />
           <Route element={<ProtectedRoute />}>
             <Route path=":postId" element={<PostDetail/>} />
-            {/* <Route path="new" element={<NewPost/>} /> */}
+            <Route path="new" element={<PostForm/>} />
             {/* TODO path="edit/:postId" element={<EditPost/>} */}
           </Route>
           {/* TODO path="categories" element={<Categories/>} */}

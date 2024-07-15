@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { FormActionType } from '../interfaces';
 
 type UIState = {
     messages: {
@@ -6,6 +7,7 @@ type UIState = {
         success: string[];
         error: string[];
     };
+    formAction: FormActionType;
 };
 
 const INITIAL_STATE: UIState = {
@@ -13,7 +15,8 @@ const INITIAL_STATE: UIState = {
         info: [],
         success: [],
         error: [],
-    }
+    },
+    formAction: 'create'
 };
 
 interface UpdateMessagesAction {
@@ -35,7 +38,10 @@ export const uiSlice = createSlice({
         onClearMessages: (state) => {
             state.messages = INITIAL_STATE.messages;
         },
+        onSetFormAction: (state, action: PayloadAction<FormActionType>) => {
+            state.formAction = action.payload;
+        }
     }
 });
 
-export const {onSetMessages, onClearMessages} = uiSlice.actions;
+export const {onSetMessages, onClearMessages, onSetFormAction} = uiSlice.actions;

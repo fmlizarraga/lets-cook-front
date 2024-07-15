@@ -1,0 +1,51 @@
+.formContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.formInner {
+    display: flex;
+    width: 80%;
+    min-width: 940px;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.formInner form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.formSection {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.formSection input,
+.formSection textarea,
+.formSection ul {
+    width: 100%;
+}
+
+.formSection ul li {
+    padding: 5px;
+}
+
+.formSection button {
+    margin-top: 20px;
+}
+
+.formInner a {
+    padding: 0 20px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.formInner a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}

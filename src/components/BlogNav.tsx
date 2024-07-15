@@ -22,6 +22,13 @@ export const BlogNav = () => {
             label: user.name,
             items: [
                 {
+                    label: 'New Post',
+                    icon: 'pi pi-file-plus',
+                    command: () => {
+                        navigate("/blog/new");
+                    }
+                },
+                {
                     label: 'Logout',
                     icon: 'pi pi-sign-out',
                     command: () => {

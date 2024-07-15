@@ -4,7 +4,11 @@ import { useAuthStore } from "../hooks";
 const ProtectedRoute = () => {
   const { authStatus } = useAuthStore();
 
-  return authStatus === 'authenticated' ? <Outlet /> : <Navigate to="/auth/login" />;
+  if (authStatus === 'unauthenticated') {
+    return <Navigate to="/auth/login" />;
+  }
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
