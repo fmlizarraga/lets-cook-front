@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -10,7 +11,6 @@ import { Card } from "primereact/card";
 import { useAuthStore, useUIStore } from "../hooks";
 
 import styles from './Login.module.css';
-import { useEffect } from "react";
 
 const schema = z.object({
     email: z.string().min(1, "The email is required").email("Invalid email format"),

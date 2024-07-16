@@ -17,8 +17,8 @@ export default function AppRouter() {
           <Route path="posts" element={<BlogPosts/>} />
           <Route element={<ProtectedRoute />}>
             <Route path=":postId" element={<PostDetail/>} />
+            <Route path=":postId/edit" element={<PostForm/>} />
             <Route path="new" element={<PostForm/>} />
-            {/* TODO path="edit/:postId" element={<EditPost/>} */}
           </Route>
           {/* TODO path="categories" element={<Categories/>} */}
           {/* TODO path=":tagsFilter" element={<BlogPosts/>} */}

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
@@ -7,7 +7,7 @@ import { Image } from 'primereact/image';
 import { Menu } from 'primereact/menu';
 import { MenuItem } from 'primereact/menuitem';
 import { Tag } from 'primereact/tag';
-import { useBlogStore } from "../hooks";
+import { useAuthStore, useBlogStore } from "../hooks";
 import { getNTagsAsStrings } from '../interfaces';
 import { BlogNav, CommentSection } from '../components';
 import { sanitizeHTML } from '../utils/blog';
@@ -15,15 +15,27 @@ import { sanitizeHTML } from '../utils/blog';
 import styles from './PostDetail.module.css';
 
 export function PostDetail() {
+  const navigate = useNavigate();
   const { posts } = useBlogStore();
+  const { user } = useAuthStore();
   let { postId } = useParams();
 
   const post = posts.find(post => post.id === postId);
-
+  
   const optionsMenu = useRef<Menu>(null);
-
+  
   if(post) {
+    const canEdit: boolean = post.author.id === user.id ||
+      user.group === 'Admin' ||
+      user.group === 'Moderator' ||
+      user.group === 'Staff';
     let postDate = new Date(post.timeStamp).toLocaleDateString();
+
+    console.log({canEdit:canEdit});
+
+    const handleEditOption = () => {
+      navigate('./edit', {relative: "path"});
+    };
 
     const optionsMenuItems: MenuItem[] = [
       {
@@ -31,7 +43,13 @@ export function PostDetail() {
         items: [
           {
             label: 'share',
-            icon: 'pi pi-share-alt'
+            icon: 'pi pi-share-alt',
+          },
+          {
+            label: 'edit',
+            icon: 'pi pi-file-edit',
+            visible: canEdit,
+            command: handleEditOption
           }
         ],
       }

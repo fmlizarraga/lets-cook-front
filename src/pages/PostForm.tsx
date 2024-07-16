@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,11 +26,13 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export function PostForm() {
-  const { savePost } = useBlogStore();
+  const { savePost, posts } = useBlogStore();
   const { user } = useAuthStore()
   const { pushMessage, setMessages, formAction } = useUIStore();
 
   const navigate = useNavigate();
+  const { postId } = useParams();
+  const post = posts.find(post => post.id === postId);
 
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormValues>({
     resolver: zodResolver(schema)
@@ -42,6 +44,18 @@ export function PostForm() {
   useEffect(() => {
     setValue("body", body);
   }, [body, setValue]);
+
+  useEffect(() => {
+    if(post && formAction === 'edit') {
+      setValue('title', post.title);
+      setValue('summary', post.summary || '');
+      setValue('featuredImage', post.featuredImage || '');
+      setValue('tags', post.tags.map(tag => tag.value));
+      setValue('body', post.body);
+      setTags(post.tags.map(tag => tag.value));
+      setBody(post.body);
+    }
+  }, [post,formAction,setValue]);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     try {
@@ -60,15 +74,35 @@ export function PostForm() {
           status: 'Pending',
           timeStamp: Date.now()
         }, formAction);
+        navigate('/blog');
       } else if (formAction === 'edit') {
-        // TODO edition logic...
+        if(post) {
+          savePost({
+            ...post,
+            title: data.title,
+            summary: data.summary,
+            body: data.body,
+            tags: validatedTags,
+            featuredImage: data.featuredImage,
+          },formAction);
+          navigate('..',{relative:'path'});
+        }
       }
-      navigate('/blog');
     } catch (error) {
       if (error instanceof Error) pushMessage('error', error.message);
       return;
     }
   };
+
+  useEffect(() => {
+    const error: string[] = [];
+    if(errors.title?.message) error.push(errors.title.message);
+    if(errors.summary?.message) error.push(errors.summary.message);
+    if(errors.body?.message) error.push(errors.body.message);
+    if(errors.tags?.message) error.push(errors.tags.message);
+    if(errors.featuredImage?.message) error.push(errors.featuredImage.message);
+    setMessages({error});
+  }, [errors]);
 
   return (
     <div className={styles.formContainer}>
@@ -82,17 +116,6 @@ export function PostForm() {
         }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.errorContainer}>
-            {Object.keys(errors).length > 0 && (
-              <div className={styles.errorList}>
-                {errors.title && <p>title {errors.title.message}</p>}
-                {errors.summary && <p>summary {errors.summary.message}</p>}
-                {errors.body && <p>body {errors.body.message}</p>}
-                {errors.tags && <p>tags {errors.tags.message}</p>}
-                {errors.featuredImage && <p>image {errors.featuredImage.message}</p>}
-              </div>
-            )}
-          </div>
           <div className={styles.formSection}>
             <label htmlFor="title">Title</label>
             <InputText {...register("title")} placeholder='Write a title...' />
