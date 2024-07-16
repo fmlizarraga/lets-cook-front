@@ -31,8 +31,6 @@ export function PostDetail() {
       user.group === 'Staff';
     let postDate = new Date(post.timeStamp).toLocaleDateString();
 
-    console.log({canEdit:canEdit});
-
     const handleEditOption = () => {
       navigate('./edit', {relative: "path"});
     };

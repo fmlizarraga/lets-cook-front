@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -27,67 +27,64 @@ type FormValues = z.infer<typeof schema>;
 
 export function PostForm() {
   const { savePost, posts } = useBlogStore();
-  const { user } = useAuthStore()
+  const { user } = useAuthStore();
   const { pushMessage, setMessages, formAction } = useUIStore();
 
   const navigate = useNavigate();
   const { postId } = useParams();
   const post = posts.find(post => post.id === postId);
 
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormValues>({
-    resolver: zodResolver(schema)
+  const { register, handleSubmit, formState: { errors }, setValue, getValues } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: post && formAction === 'edit' ? {
+      title: post.title,
+      summary: post.summary || '',
+      featuredImage: post.featuredImage || '',
+      tags: post.tags.map(tag => tag.value),
+      body: post.body
+    } : {}
   });
 
-  const [tags, setTags] = useState<string[]>([]);
-  const [body, setBody] = useState<string>("");
+  const [tags, setTags] = useState<string[]>(getValues('tags') || []);
 
   useEffect(() => {
-    setValue("body", body);
-  }, [body, setValue]);
+    setTags(getValues('tags') || []);
+  }, [getValues('tags')]);
 
-  useEffect(() => {
-    if(post && formAction === 'edit') {
-      setValue('title', post.title);
-      setValue('summary', post.summary || '');
-      setValue('featuredImage', post.featuredImage || '');
-      setValue('tags', post.tags.map(tag => tag.value));
-      setValue('body', post.body);
-      setTags(post.tags.map(tag => tag.value));
-      setBody(post.body);
+  const savePostData = (data: FormValues) => {
+    const validatedTags: Tag[] = data.tags?.map(tag => newTag(tag)) || [];
+    data.tags = validatedTags.map(tag => tag.value);
+    data.body = DOMPurify.sanitize(data.body);
+
+    if (formAction === 'create') {
+      savePost({
+        author: user,
+        title: data.title,
+        summary: data.summary,
+        body: data.body,
+        tags: validatedTags,
+        featuredImage: data.featuredImage,
+        likes: 0,
+        status: 'Pending',
+        timeStamp: Date.now()
+      }, formAction);
+      navigate('/blog');
+    } else if (formAction === 'edit' && post) {
+      savePost({
+        ...post,
+        title: data.title,
+        summary: data.summary,
+        body: data.body,
+        tags: validatedTags,
+        featuredImage: data.featuredImage,
+      }, formAction);
+      navigate('..', { relative: 'path' });
     }
-  }, [post,formAction,setValue]);
+  };
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     try {
-      const validatedTags: Tag[] = tags.map(tag => newTag(tag));
-      data.tags = validatedTags.map(tag => tag.value);
-      data.body = DOMPurify.sanitize(data.body);
-      if (formAction === 'create') {
-        savePost({
-          author: user,
-          title: data.title,
-          summary: data.summary,
-          body: data.body,
-          tags: validatedTags,
-          featuredImage: data.featuredImage,
-          likes: 0,
-          status: 'Pending',
-          timeStamp: Date.now()
-        }, formAction);
-        navigate('/blog');
-      } else if (formAction === 'edit') {
-        if(post) {
-          savePost({
-            ...post,
-            title: data.title,
-            summary: data.summary,
-            body: data.body,
-            tags: validatedTags,
-            featuredImage: data.featuredImage,
-          },formAction);
-          navigate('..',{relative:'path'});
-        }
-      }
+      savePostData(data);
     } catch (error) {
       if (error instanceof Error) pushMessage('error', error.message);
       return;
@@ -101,14 +98,19 @@ export function PostForm() {
     if(errors.body?.message) error.push(errors.body.message);
     if(errors.tags?.message) error.push(errors.tags.message);
     if(errors.featuredImage?.message) error.push(errors.featuredImage.message);
-    setMessages({error});
+    setMessages({ error });
   }, [errors]);
+
+  const pageTitle = () => {
+    if(formAction === 'create') return "Edit New Post";
+    else if(formAction === 'edit') return "Edit Post #" + postId;
+  };
 
   return (
     <div className={styles.formContainer}>
       <Card
         className={styles.formInner}
-        title="Post Editor"
+        title={pageTitle()}
         pt={{
           body: { style: { width: '100%' } },
           title: { style: { textAlign: 'center' } },
@@ -127,8 +129,12 @@ export function PostForm() {
           <div className={styles.formSection}>
             <label htmlFor="tags">Tags (at least one)</label>
             <Chips
+              name="tags"
               value={tags}
-              onChange={(e) => setTags(e.value ?? [])}
+              onChange={(e) => {
+                setTags(e.value || []);
+                setValue("tags", e.value || []);
+              }}
               placeholder='Add each tag by pressing Enter'
               pt={{
                 root: { style: { width: '100%' } },
@@ -141,11 +147,12 @@ export function PostForm() {
             <label htmlFor="featuredImage">Featured picture (optional)</label>
             <InputText {...register("featuredImage")} placeholder='Insert a valid URL...' />
           </div>
-          <div >
+          <div>
             <label htmlFor="body">Body</label>
             <Editor
-              value={body}
-              onTextChange={(e) => setBody(e.htmlValue || "")}
+              name="body"
+              value={getValues("body")}
+              onTextChange={(e) => setValue("body", e.htmlValue || "")}
               style={{ height: '240px' }}
               placeholder='Write the body of your post here...'
             />
