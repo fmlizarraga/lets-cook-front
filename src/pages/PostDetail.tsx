@@ -8,9 +8,8 @@ import { Menu } from 'primereact/menu';
 import { MenuItem } from 'primereact/menuitem';
 import { Tag } from 'primereact/tag';
 import { useAuthStore, useBlogStore } from "../hooks";
-import { getNTagsAsStrings } from '../interfaces';
 import { BlogNav, CommentSection } from '../components';
-import { sanitizeHTML } from '../utils/blog';
+import { getNTagsAsStrings, sanitizeHTML } from '../utils/blog';
 
 import styles from './PostDetail.module.css';
 

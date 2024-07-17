@@ -4,8 +4,6 @@ import {
     RootStore,
     onLoadPosts,
     onSetTagsFilter,
-    onSetActivePost,
-    onClearActivePost,
     onCreatePost,
     onUpdatePost,
     onDeletePost
@@ -14,7 +12,7 @@ import { FormActionType, Post } from "../interfaces";
 
 
 export const useBlogStore = () => {
-    const { posts, activePost, tagFilter } = useSelector((state: RootStore) => state.blog);
+    const { posts, tagFilter } = useSelector((state: RootStore) => state.blog);
     const dispatch = useDispatch();
 
     const { blogRepository } = useRepository();
@@ -40,8 +38,8 @@ export const useBlogStore = () => {
         dispatch(onSetTagsFilter({tagFilter:''}));
     };
 
-    const filterByTags = (tags: string, posts: Post[]): Post[] => {
-        const categories = tags.split(' ');
+    const getFilteredPosts = (): Post[] => {
+        const categories = tagFilter.split(' ');
 
         return posts.filter(post =>
             post.tags.some(tag =>
@@ -84,13 +82,12 @@ export const useBlogStore = () => {
     return {
         // * Properties
         posts,
-        activePost,
         tagFilter,
         // * Methods
         loadPosts,
         setTagsFilter,
         clearTagsFilter,
-        filterByTags,
+        getFilteredPosts,
         savePost,
         setPostDeleted
     }

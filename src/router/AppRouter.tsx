@@ -15,13 +15,12 @@ export default function AppRouter() {
         {/* TODO path="about" element={<About/>} */}
         <Route path="blog" element={<Blog/>} >
           <Route path="posts" element={<BlogPosts/>} />
+          <Route path=":postId" element={<PostDetail/>} />
+          <Route path="categories/:filter" element={<BlogPosts/>} />
           <Route element={<ProtectedRoute />}>
-            <Route path=":postId" element={<PostDetail/>} />
             <Route path=":postId/edit" element={<PostForm/>} />
             <Route path="new" element={<PostForm/>} />
           </Route>
-          {/* TODO path="categories" element={<Categories/>} */}
-          {/* TODO path=":tagsFilter" element={<BlogPosts/>} */}
           <Route index element={<Navigate to="posts" />} />
         </Route>
         <Route path="auth" element={<Auth/>} >

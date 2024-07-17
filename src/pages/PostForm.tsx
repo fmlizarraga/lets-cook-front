@@ -10,8 +10,9 @@ import { Editor } from 'primereact/editor';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import DOMPurify from 'dompurify';
-import { Tag, newTag } from '../interfaces';
+import { Tag } from '../interfaces';
 import { useAuthStore, useBlogStore, useUIStore } from '../hooks';
+import { newTag } from '../utils/blog';
 
 import styles from './PostForm.module.css';
 

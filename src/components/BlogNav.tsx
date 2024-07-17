@@ -75,9 +75,9 @@ export const BlogNav = () => {
             <nav className={styles.blogHeaderNav} >
                 <ul>
                     <li><Link to="/blog">All Posts</Link></li>
-                    <li><Link to="/categories/quick-easy">Quick & Easy</Link></li>
-                    <li><Link to="/categories/vegetarian">Vegetarian</Link></li>
-                    <li><Link to="/categories/main-course">Main Course</Link></li>
+                    <li><Link to="/blog/categories/quick-easy">Quick & Easy</Link></li>
+                    <li><Link to="/blog/categories/vegetarian">Vegetarian</Link></li>
+                    <li><Link to="/blog/categories/main-course">Main Course</Link></li>
                 </ul>
             </nav>
             {AuthSection}

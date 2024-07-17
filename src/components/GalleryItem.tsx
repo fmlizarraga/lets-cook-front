@@ -3,8 +3,8 @@ import { Card } from 'primereact/card';
 import { Avatar } from 'primereact/avatar';
 import { Tag } from 'primereact/tag';
 import { Badge } from 'primereact/badge';
-import { Post, getNTagsAsStrings } from '../interfaces';
-import { sanitizeHTML } from '../utils/blog';
+import { Post } from '../interfaces';
+import { getNTagsAsStrings, sanitizeHTML } from '../utils/blog';
 
 import styles from './GalleryItem.module.css';
 

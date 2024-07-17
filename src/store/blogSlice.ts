@@ -1,26 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { BlogState, Post, User } from "../interfaces";
-
-const DEFAULT_AUTHOR: User = {
-    id: "",
-    name: "Unknown",
-    email: "",
-    group: "Member"
-};
-
-const EMPTY_POST: Post = {
-    author: DEFAULT_AUTHOR,
-    title: '',
-    body: '',
-    timeStamp: 0,
-    tags: [],
-    likes: 0,
-    status: 'Approved'
-};
+import { BlogState, Post } from "../interfaces";
 
 const INITIAL_STATE: BlogState = {
     posts: [],
-    activePost: EMPTY_POST,
     tagFilter: ''
 };
 
@@ -44,12 +26,6 @@ export const blogSlice = createSlice({
     name: 'posts',
     initialState: INITIAL_STATE,
     reducers: {
-        onSetActivePost: (state, action: PayloadAction<UpdatePostAction>) => {
-            state.activePost = action.payload.post;
-        },
-        onClearActivePost: (state) => {
-            state.activePost = EMPTY_POST;
-        },
         onSetTagsFilter: (state, action: PayloadAction<FilterByTagsAction>) => {
             state.tagFilter = action.payload.tagFilter;
         },
@@ -57,7 +33,6 @@ export const blogSlice = createSlice({
             state.posts = action.payload.posts;
         },
         onClearPosts: (state) => {
-            state.activePost = EMPTY_POST;
             state.posts = [];
             state.tagFilter = '';
         },
@@ -80,8 +55,6 @@ export const blogSlice = createSlice({
 });
 
 export const {
-    onSetActivePost,
-    onClearActivePost,
     onSetTagsFilter,
     onLoadPosts,
     onClearPosts,

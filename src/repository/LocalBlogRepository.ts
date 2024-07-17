@@ -1,4 +1,5 @@
-import { Post, Tag, User, newTag } from "../interfaces";
+import { Post, Tag, User } from "../interfaces";
+import { newTag } from "../utils/blog";
 import { BlogRepository } from "./";
 
 const DEMO_USERS: User[] = [
