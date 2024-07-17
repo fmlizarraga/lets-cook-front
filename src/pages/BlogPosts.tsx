@@ -18,7 +18,7 @@ export function BlogPosts() {
     } else {
       clearTagsFilter();
     }
-  }, [filter, setTagsFilter, clearTagsFilter]);
+  }, [filter]);
 
   useEffect(() => {
     if (tagFilter) {
@@ -26,7 +26,7 @@ export function BlogPosts() {
     } else {
       setPostsToShow(posts);
     }
-  }, [tagFilter, posts, getFilteredPosts]);
+  }, [tagFilter, posts]);
   
 
   return (

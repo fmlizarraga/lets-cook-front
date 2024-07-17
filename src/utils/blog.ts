@@ -1,6 +1,6 @@
 
 import DOMPurify from 'dompurify';
-import { Post, Tag, isValidTag } from '../interfaces';
+import { Tag, isValidTag } from '../interfaces';
 
 export const sanitizeHTML = (text: string) => {
     return DOMPurify.sanitize(text);

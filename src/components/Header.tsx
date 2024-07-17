@@ -1,5 +1,6 @@
 import { Fragment } from 'react/jsx-runtime';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button } from 'primereact/button';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
@@ -12,9 +13,21 @@ interface NavItem {
   label: string;
   icon: string;
   action: string;
-}
+};
+
+type Inputs = {
+  search: string;
+};
 
 export function Header() {
+  const navigate = useNavigate();
+
+  const { register, handleSubmit, reset } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = ({search}) => {
+    const path = '/blog/categories/' + encodeURIComponent(search);
+    reset();
+    navigate(path);
+  };
    
   const navItems: NavItem[] = [
     {
@@ -62,12 +75,14 @@ export function Header() {
         <div className="header-picture">
           <img src="/media/header-2.webp" alt="Delicious food" width={940} height={333} />
         </div>
-        <div className="header-search-container">
-          <IconField iconPosition="left">
-            <InputIcon className="pi pi-search"> </InputIcon>
-            <InputText v-model="value1" placeholder="Search" />
-          </IconField>
-          <Button icon="pi pi-search" rounded severity='info' />
+        <div>
+          <form className="header-search-container" onSubmit={handleSubmit(onSubmit)}>
+            <IconField iconPosition="left">
+              <InputIcon className="pi pi-search"> </InputIcon>
+              <InputText {...register('search')} placeholder="Search" />
+            </IconField>
+            <Button type='submit' icon="pi pi-search" rounded severity='info' />
+          </form>
         </div>
     </div>
   )
