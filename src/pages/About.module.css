@@ -1,0 +1,83 @@
+.aboutContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 80%;
+    max-width: 940px;
+}
+
+.aboutInner {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: 30px;
+}
+
+.aboutInnerSection {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+}
+
+.aboutInnerSection p {
+    color: var(--text-color-secondary);
+    margin: 0;
+}
+
+.profilePic {
+    max-width: 100%;
+    margin-bottom: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profileSummary p {
+    margin: 0;
+}
+
+p.profileHeader {
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.contactInfo p {
+    margin-bottom: 20px;
+}
+
+.contactLinks {
+    display: flex;
+    justify-content: space-between;
+}
+
+.contactLinks a {
+    color: var(--text-color);
+    transition: color 0.3s;
+}
+
+.contactLinks a:hover {
+    color: var(--primary-color);
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.inputContainer label i {
+    font-size: 0.7rem;
+    transform: translateY(-0.5rem);
+}
+
+.submitContainer {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+}

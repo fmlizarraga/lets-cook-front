@@ -39,7 +39,7 @@ export const useUIStore = () => {
 
     const setEditorAction = (action: FormActionType) => {
         dispatch(onSetFormAction(action));
-    }
+    };
 
     return {
         // Properties

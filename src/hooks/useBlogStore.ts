@@ -10,7 +10,6 @@ import {
 } from "../store";
 import { FormActionType, Post } from "../interfaces";
 
-
 export const useBlogStore = () => {
     const { posts, tagFilter } = useSelector((state: RootStore) => state.blog);
     const dispatch = useDispatch();
