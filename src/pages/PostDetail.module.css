@@ -27,6 +27,10 @@
     margin-top: 0.6rem;
 }
 
+.postMetadata img {
+    object-fit: cover;
+}
+
 .postMetaText {
     display: flex;
     flex-direction: row;

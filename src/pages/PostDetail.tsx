@@ -58,6 +58,8 @@ export function PostDetail() {
         <div className={styles.postMetadata}>
           <Avatar
             className={styles.postAuthorAvatar}
+            image={post.author.picture}
+            imageAlt={post.author.name}
             icon="pi pi-user"
             size="normal"
             shape="circle"

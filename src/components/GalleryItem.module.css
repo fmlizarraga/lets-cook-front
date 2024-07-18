@@ -8,6 +8,10 @@
     margin-bottom: 1rem;
 }
 
+.postMetadata img {
+    object-fit: cover;
+}
+
 .postMetaText {
     display: flex;
     flex-direction: column;
