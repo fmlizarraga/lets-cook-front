@@ -1,4 +1,4 @@
-import { Post, Tag, User } from "../interfaces";
+import { Comment, Post, Tag, User } from "../interfaces";
 import { newTag } from "../utils/blog";
 import { BlogRepository } from "./";
 
@@ -36,6 +36,17 @@ const DEMO_TAGS: Tag[] = [
     },
 ];
 
+const DEMO_COMMENTS: Comment[] = [
+    {
+        id: 'cmnt0001',
+        author: DEMO_USERS[0],
+        body: 'Hello! This is a comment.',
+        likes: 0,
+        status: 'Approved',
+        timeStamp: 1699995557555,
+    },
+];
+
 const DEMO_POSTS: Post[] = [
     {
         id: 'aabbcc0001',
@@ -49,14 +60,7 @@ const DEMO_POSTS: Post[] = [
         tags: [DEMO_TAGS[3], DEMO_TAGS[1], DEMO_TAGS[4]],
         status: 'Approved',
         comments: [
-            {
-                id: 'cmnt0001',
-                author: DEMO_USERS[0],
-                body: 'Hello! This is a comment.',
-                likes: 0,
-                status: 'Approved',
-                timeStamp: 1699995557555,
-            }
+            DEMO_COMMENTS[0],
         ]
     },
     {
@@ -76,6 +80,7 @@ const DEMO_POSTS: Post[] = [
 const LocalBlogRepository: BlogRepository = {
     getPosts: async () => { return DEMO_POSTS },
     createPost: async (post:Post, token: string) => {
+        console.log('Test Token: ',token);
         const postId = 'aabbcc' + (DEMO_POSTS.length + 1).toLocaleString(
             'en-US',
             {
@@ -90,6 +95,7 @@ const LocalBlogRepository: BlogRepository = {
         return newPost;
     },
     updatePost: async (post: Post, token: string) => {
+        console.log('Test Token: ',token);
         DEMO_POSTS.map(curr => {
             if(curr.id === post.id) return post
             return curr;
@@ -97,11 +103,40 @@ const LocalBlogRepository: BlogRepository = {
         return post
     },
     deletePost: async (postId: string, token: string) => {
+        console.log('Test Token: ',token);
         DEMO_POSTS.map(curr => {
             if(curr.id === postId) return {...curr, status:'Deleted'};
             return curr;
         });
         return;
+    },
+    addComment: async (postId: string, comment: Comment, token: string) => {
+        console.log('Test Token: ',token);
+        const post = DEMO_POSTS.find(p => p.id === postId);
+        const commentId = `cmnt${(DEMO_COMMENTS.length + 1).toLocaleString(
+            'en-US',
+            {
+                minimumIntegerDigits: 4,
+                useGrouping: false
+            })
+        }`;
+        DEMO_COMMENTS.push({...comment, id: commentId});
+        if(post && !post.comments) post.comments = [];
+        post?.comments?.push(DEMO_COMMENTS[DEMO_COMMENTS.findIndex(c => c.id === commentId)]);
+        return {...comment, id: commentId};
+    },
+    updateComment: async(comment, token) => {
+        console.log('Test Token: ',token);
+        const commentIndex = DEMO_COMMENTS.findIndex(c => c.id === comment.id);
+        DEMO_COMMENTS[commentIndex] = {...comment};
+        return DEMO_COMMENTS[commentIndex];
+    },
+    deleteComment: async(commentId, token) => {
+        console.log('Test Token: ',token);
+        DEMO_COMMENTS.map(c => {
+            if(c.id === commentId) return {...c, status: 'Deleted'}
+            return c;
+        });
     },
 };
 

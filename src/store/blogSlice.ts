@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { BlogState, Post } from "../interfaces";
+import { BlogState, Post, Comment } from "../interfaces";
 
 const INITIAL_STATE: BlogState = {
     posts: [],
@@ -20,6 +20,16 @@ interface LoadPostsAction {
 
 interface FilterByTagsAction {
     tagFilter: string;
+};
+
+interface UpdateCommentAction {
+    postId: string,
+    comment: Comment
+};
+
+interface DeleteCommentAction {
+    postId: string;
+    commentId: string;
 };
 
 export const blogSlice = createSlice({
@@ -50,7 +60,25 @@ export const blogSlice = createSlice({
         onDeletePost: (state, action: PayloadAction<DeletePostAction>) => {
             const id = action.payload.id;
             state.posts = state.posts.filter( curr => curr.id !== id );
-        }
+        },
+        onAddComment: (state, action: PayloadAction<UpdateCommentAction>) => {
+            const post = state.posts.find(p => p.id === action.payload.postId);
+            post?.comments?.push(action.payload.comment);
+            if(post && !post.comments) post.comments = [action.payload.comment];
+        },
+        onUpdateComment: (state, action: PayloadAction<UpdateCommentAction>) => {
+            const post = state.posts.find(p => p.id === action.payload.postId);
+            if(post && post.comments) {
+                post.comments = post?.comments?.map(curr => {
+                    if(curr.id === action.payload.comment.id) return action.payload.comment;
+                    return curr;
+                });
+            }
+        },
+        onDeleteComment: (state, action: PayloadAction<DeleteCommentAction>) => {
+            const post = state.posts.find(p => p.id === action.payload.postId);
+            post?.comments?.filter(c => c.id !== action.payload.commentId);
+        },
     }
 });
 
@@ -60,5 +88,8 @@ export const {
     onClearPosts,
     onCreatePost,
     onUpdatePost,
-    onDeletePost
+    onDeletePost,
+    onAddComment,
+    onUpdateComment,
+    onDeleteComment
 } = blogSlice.actions;

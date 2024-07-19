@@ -6,16 +6,27 @@ import {
     onSetTagsFilter,
     onCreatePost,
     onUpdatePost,
-    onDeletePost
+    onDeletePost,
+    onAddComment,
+    onUpdateComment,
+    onDeleteComment
 } from "../store";
-import { FormActionType, Post } from "../interfaces";
+import { FormActionType, Post, Comment } from "../interfaces";
 
 export const useBlogStore = () => {
     const { posts, tagFilter } = useSelector((state: RootStore) => state.blog);
     const dispatch = useDispatch();
 
     const { blogRepository } = useRepository();
-    const {getPosts, createPost, updatePost, deletePost} = blogRepository.repository;
+    const {
+        getPosts,
+        createPost,
+        updatePost,
+        deletePost,
+        addComment,
+        updateComment,
+        deleteComment
+    } = blogRepository.repository;
 
     const token = localStorage.getItem('token');
 
@@ -78,6 +89,42 @@ export const useBlogStore = () => {
         }
     };
 
+    const addPostComment = async (postId: string, comment: Comment) => {
+        if (!token) throw new Error("You must be signed in to perform this action");
+
+        try {
+            const newComment = await addComment(postId, comment, token);
+            dispatch(onAddComment({ postId, comment: newComment }));
+        } catch (error) {
+            console.error(error);
+            throw new Error("The operation could not be completed, please try again later.");
+        }
+    };
+
+    const updatePostComment = async (postId: string, comment: Comment) => {
+        if (!token) throw new Error("You must be signed in to perform this action");
+
+        try {
+            const updatedComment = await updateComment(comment, token);
+            dispatch(onUpdateComment({ postId, comment: updatedComment }));
+        } catch (error) {
+            console.error(error);
+            throw new Error("The operation could not be completed, please try again later.");
+        }
+    };
+
+    const deletePostComment = async (postId: string, commentId: string) => {
+        if (!token) throw new Error("You must be signed in to perform this action");
+
+        try {
+            await deleteComment(commentId, token);
+            dispatch(onDeleteComment({ postId, commentId }));
+        } catch (error) {
+            console.error(error);
+            throw new Error("The operation could not be completed, please try again later.");
+        }
+    };
+
     return {
         // * Properties
         posts,
@@ -88,6 +135,9 @@ export const useBlogStore = () => {
         clearTagsFilter,
         getFilteredPosts,
         savePost,
-        setPostDeleted
+        setPostDeleted,
+        addPostComment,
+        updatePostComment,
+        deletePostComment
     }
 };
