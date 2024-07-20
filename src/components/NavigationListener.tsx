@@ -9,7 +9,7 @@ export const NavigationListener = () => {
     useEffect(() => {
         if(location.pathname === '/blog/new') setEditorAction('create');
         else if(location.pathname.includes('edit')) setEditorAction('edit');
-        clearMessages();
+        // clearMessages();
     }, [location]);
 
     return null;

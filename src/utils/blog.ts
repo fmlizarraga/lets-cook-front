@@ -1,6 +1,6 @@
 
 import DOMPurify from 'dompurify';
-import { Tag, isValidTag } from '../interfaces';
+import { Comment, Tag, User, isValidTag } from '../interfaces';
 
 export const sanitizeHTML = (text: string) => {
     return DOMPurify.sanitize(text);
@@ -25,3 +25,13 @@ export const newTag = (str: string): Tag => {
   export const getTagsFromString = (tagsString: string): Tag[] => {
     return tagsString.split(' ').map(t => newTag(t));
   };
+
+export const newComment = (body: string, author: User):Comment => {
+  return {
+    author,
+    body,
+    likes: 0,
+    status: 'Pending',
+    timeStamp: Date.now(),
+  };
+};

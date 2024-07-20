@@ -42,7 +42,7 @@ export function Login() {
         const error: string[] = [];
         if(errors.email?.message) error.push(errors.email.message);
         if(errors.password?.message) error.push(errors.password.message);
-        setMessages({error});
+        if(error.length > 0) setMessages({error});
     }, [errors]);
 
     return (

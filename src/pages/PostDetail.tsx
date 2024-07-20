@@ -142,7 +142,7 @@ export function PostDetail() {
           </Card>
         </article>
         <div className={styles.commentBox}>
-          <CommentSection comments={post.comments || []} />
+          <CommentSection postId={post.id || ''} comments={post.comments || []} />
         </div>
       </>
     );

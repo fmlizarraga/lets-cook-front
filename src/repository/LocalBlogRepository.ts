@@ -73,7 +73,8 @@ const DEMO_POSTS: Post[] = [
         featuredImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Castle_Bravo_Blast.jpg/800px-Castle_Bravo_Blast.jpg',
         likes: 0,
         tags: [DEMO_TAGS[3], DEMO_TAGS[2]],
-        status: 'Approved'
+        status: 'Approved',
+        comments: []
     },
 ];
 
@@ -88,9 +89,10 @@ const LocalBlogRepository: BlogRepository = {
                 useGrouping: false
             }
         );
-        const newPost = {
+        const newPost: Post = {
             ...post,
-            id: postId
+            id: postId,
+            comments: []
         }
         return newPost;
     },
@@ -113,17 +115,27 @@ const LocalBlogRepository: BlogRepository = {
     addComment: async (postId: string, comment: Comment, token: string) => {
         console.log('Test Token: ',token);
         const post = DEMO_POSTS.find(p => p.id === postId);
-        const commentId = `cmnt${(DEMO_COMMENTS.length + 1).toLocaleString(
-            'en-US',
-            {
-                minimumIntegerDigits: 4,
-                useGrouping: false
-            })
-        }`;
-        DEMO_COMMENTS.push({...comment, id: commentId});
-        if(post && !post.comments) post.comments = [];
-        post?.comments?.push(DEMO_COMMENTS[DEMO_COMMENTS.findIndex(c => c.id === commentId)]);
-        return {...comment, id: commentId};
+        if(post) {
+            const commentId = `cmnt${(DEMO_COMMENTS.length + 1).toLocaleString(
+                'en-US',
+                {
+                    minimumIntegerDigits: 4,
+                    useGrouping: false
+                })
+            }`;
+            DEMO_COMMENTS.push({...comment, id: commentId});
+            if(post.comments) {
+                const myComments = [...post.comments, DEMO_COMMENTS[DEMO_COMMENTS.findIndex(c => c.id === commentId)]]
+                DEMO_POSTS.map(p => {
+                    if(p.id === postId) {
+                        return {...post, comments: myComments}
+                    }
+                    return p;
+                });
+            }
+            return {...comment, id: commentId};
+        }
+        throw new Error("The post referenced doesn't exist or was deleted.");
     },
     updateComment: async(comment, token) => {
         console.log('Test Token: ',token);
