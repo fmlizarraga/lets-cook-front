@@ -77,6 +77,8 @@ export const useBlogStore = () => {
         }
     };
 
+    // TODO setPostApproved
+
     const setPostDeleted = async (post: Post) => {
         if (!token) throw new Error("You must be signed in to perform this action");
 
@@ -114,6 +116,14 @@ export const useBlogStore = () => {
         }
     };
 
+    const approveComment = async (postId: string, comment: Comment) => {
+        await updatePostComment(postId, {...comment, status: 'Approved'});
+    };
+
+    const hideComment = async (postId: string, comment: Comment) => {
+        await updatePostComment(postId, {...comment, status: 'Hidden'});
+    };
+
     const deletePostComment = async (postId: string, commentId: string) => {
         if (!token) throw new Error("You must be signed in to perform this action");
 
@@ -139,6 +149,8 @@ export const useBlogStore = () => {
         setPostDeleted,
         addPostComment,
         updatePostComment,
+        approveComment,
+        hideComment,
         deletePostComment
     }
 };

@@ -12,6 +12,7 @@ import { BlogNav, CommentSection } from '../components';
 import { getNTagsAsStrings, sanitizeHTML } from '../utils/blog';
 
 import styles from './PostDetail.module.css';
+import { canEditPost } from '../utils/user';
 
 export function PostDetail() {
   const navigate = useNavigate();
@@ -24,10 +25,6 @@ export function PostDetail() {
   const optionsMenu = useRef<Menu>(null);
   
   if(post) {
-    const canEdit: boolean = post.author.id === user.id ||
-      user.group === 'Admin' ||
-      user.group === 'Moderator' ||
-      user.group === 'Staff';
     let postDate = new Date(post.timeStamp).toLocaleDateString();
 
     const handleEditOption = () => {
@@ -45,7 +42,7 @@ export function PostDetail() {
           {
             label: 'edit',
             icon: 'pi pi-file-edit',
-            visible: canEdit,
+            visible: canEditPost(user,post.author),
             command: handleEditOption
           }
         ],

@@ -1,22 +1,6 @@
-import { Comment, Post, Tag, User } from "../interfaces";
+import { Comment, Post, Tag } from "../interfaces";
 import { newTag } from "../utils/blog";
-import { BlogRepository } from "./";
-
-const DEMO_USERS: User[] = [
-    {
-        id: 'uid0001',
-        name: 'Pepe',
-        email: 'pepe@mail.com',
-        group: 'Gold',
-        picture: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kermit_the_frog_hollywood_walk_of_fame_%286917430870%29.jpg/240px-Kermit_the_frog_hollywood_walk_of_fame_%286917430870%29.jpg'
-    },
-    {
-        id: 'uid0002',
-        name: 'Maria',
-        email: 'maria@mail.com',
-        group: 'Member'
-    },
-];
+import { BlogRepository, DEMO_USERS } from "./";
 
 const DEMO_TAGS: Tag[] = [
     newTag('entry'),

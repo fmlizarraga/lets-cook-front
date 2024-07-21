@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Editor } from 'primereact/editor';
 import { Comment } from '../interfaces'
 import { useAuthStore, useBlogStore, useUIStore } from '../hooks';
-import { getGroupIcon } from '../utils/user';
+import { CommentItem } from './CommentItem';
 import { newComment } from '../utils/blog';
 
 import styles from './CommentSection.module.css';
@@ -28,21 +27,26 @@ export function CommentSection({ postId, comments }: PropsTypes) {
     const navigate = useNavigate();
 
     const [editing, setEditing] = useState<boolean>(false);
-    const { handleSubmit, register, getValues, setValue } = useForm<FormValues>();
+    const { handleSubmit, register, getValues, setValue, reset } = useForm<FormValues>();
 
-    const onSubmit: SubmitHandler<FormValues> = async ({ body }) => {
+    const checkAuth = () => {
         if (authStatus === 'unauthenticated') {
             pushMessage('error', 'Please log in to perform this action.');
             navigate('/auth');
-            return;
+            return false;
         }
+        return true;
+    };
+
+    const onSubmit: SubmitHandler<FormValues> = async ({ body }) => {
+        if (!checkAuth()) return;
         try {
             await addPostComment(postId, newComment(body, user));
             pushMessage('success', 'Your comment was posted and is awaiting moderation.');
             setEditing(false);
+            reset();
         } catch (error) {
             if (error instanceof Error) pushMessage('error', error.message);
-            return;
         }
     };
 
@@ -97,30 +101,7 @@ export function CommentSection({ postId, comments }: PropsTypes) {
                 </div>
                 <div className={styles.commentBoxContent}>
                     {comments.map(comment => (
-                        <div key={'comm' + comment.id} className={styles.commentItem}>
-                            <div className={styles.commentItemHeader}>
-                                <div className={styles.commentItemUser}>
-                                    <Avatar
-                                        style={{ fontSize: '0.5rem' }}
-                                        icon="pi pi-user"
-                                        size="normal"
-                                        shape="circle"
-                                    />
-                                    <span>{comment.author.name}<i className={getGroupIcon(comment.author)}></i></span>
-                                    <span>{new Date(comment.timeStamp).toLocaleString()}</span>
-                                </div>
-                                <div>
-                                    <Button text severity='danger' icon='pi pi-heart' rounded />
-                                    <Button text severity='secondary' icon='pi pi-ellipsis-h' rounded />
-                                </div>
-                            </div>
-                            <Editor
-                                value={comment.body}
-                                readOnly
-                                style={{ height: '120px' }}
-                                showHeader={false}
-                            />
-                        </div>
+                        <CommentItem key={'comm' + comment.id} comment={comment} postId={postId} />
                     ))}
                 </div>
             </Card>

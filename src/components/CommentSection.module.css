@@ -45,31 +45,6 @@
     margin-top: 20px;
 }
 
-.commentItem {
-    margin-top: 50px;
-}
-
-.commentItemHeader {
-    display: flex;
-    justify-content: space-between;
-    border: solid 1px var(--surface-border);
-    border-bottom: none;
-    border-radius: 6px 6px 0 0;
-    padding: 0 10px;
-    background-color: var(--surface-d);
-}
-
-.commentItemUser span {
-    margin: 0 0.5rem;
-    font-size: 0.8rem;
-    line-height: 3rem;
-}
-
-.commentItemUser i {
-    font-size: 0.7rem;
-    margin-left: 0.2rem;
-}
-
 .commentBoxHeader button {
     display: flex;
     align-items: center;

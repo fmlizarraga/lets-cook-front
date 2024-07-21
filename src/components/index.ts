@@ -5,3 +5,4 @@ export * from "./GalleryItem";
 export * from "./CommentSection";
 export * from "./LoaderStatus";
 export * from "./NavigationListener";
+export * from "./CommentItem";

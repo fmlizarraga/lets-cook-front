@@ -14,3 +14,13 @@ export const getGroupIcon = (user: User): string => {
             return '';
     }
 };
+
+export const isMod = (user: User): boolean => {
+    return user.group === 'Admin' ||
+    user.group === 'Moderator' ||
+    user.group === 'Staff';
+};
+
+export const canEditPost = (user: User, author: User): boolean => {
+    return user.id === author.id || isMod(user);
+};

@@ -1,12 +1,12 @@
 import { User } from "../interfaces";
 import { AuthRepository } from "./authRepository";
 
-const DEMO_USERS: User[] = [
+export const DEMO_USERS: User[] = [
     {
         id: 'uid0001',
         name: 'Pepe',
         email: 'pepe@mail.com',
-        group: 'Gold',
+        group: 'Admin',
         picture: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Kermit_the_frog_hollywood_walk_of_fame_%286917430870%29.jpg/240px-Kermit_the_frog_hollywood_walk_of_fame_%286917430870%29.jpg'
     },
     {
@@ -47,7 +47,10 @@ const LocalAuthRepository: AuthRepository = {
         DEMO_CREDENTIALS.push({user: user, password: password});
         return;
     },
-    checkUser: async token => 'fake-jwt-token',
+    checkUser: async token => {
+        console.log({dunnyToken: token});
+        return 'fake-jwt-token'
+    },
 };
 
 export default LocalAuthRepository;
