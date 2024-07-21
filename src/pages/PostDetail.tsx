@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
@@ -7,17 +7,20 @@ import { Image } from 'primereact/image';
 import { Menu } from 'primereact/menu';
 import { MenuItem } from 'primereact/menuitem';
 import { Tag } from 'primereact/tag';
-import { useAuthStore, useBlogStore } from "../hooks";
+import { useAuthStore, useBlogStore, useUIStore } from "../hooks";
 import { BlogNav, CommentSection } from '../components';
 import { getNTagsAsStrings, sanitizeHTML } from '../utils/blog';
+import { canEditPost } from '../utils/user';
+import { copyContent } from '../utils/ui';
 
 import styles from './PostDetail.module.css';
-import { canEditPost } from '../utils/user';
 
 export function PostDetail() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { posts } = useBlogStore();
   const { user } = useAuthStore();
+  const { pushMessage } = useUIStore();
   let { postId } = useParams();
 
   const post = posts.find(post => post.id === postId);
@@ -31,6 +34,12 @@ export function PostDetail() {
       navigate('./edit', {relative: "path"});
     };
 
+    const handleShareOption = async () => {
+      const host = 'localhost:5173';
+      const {type, message} = await copyContent(host + location.pathname);
+      pushMessage(type,message);
+    };
+
     const optionsMenuItems: MenuItem[] = [
       {
         label: 'Options',
@@ -38,6 +47,7 @@ export function PostDetail() {
           {
             label: 'share',
             icon: 'pi pi-share-alt',
+            command: handleShareOption
           },
           {
             label: 'edit',

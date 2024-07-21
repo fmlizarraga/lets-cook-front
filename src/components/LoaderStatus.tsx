@@ -1,53 +1,44 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useUIStore } from '../hooks/useUIStore';
-import styles from './LoaderStatus.module.css';
+import { Toast } from 'primereact/toast';
 
-const REMOVE_DELAY = 3000;
+const REMOVE_DELAY = 300;
+const SHOW_DELAY = 3000;
 
 export function LoaderStatus() {
     const { messages, popOldMessage } = useUIStore();
     const { info, success, error } = messages;
 
+    const toastRef = useRef<Toast>(null);
+
     useEffect(() => {
         if (info.length > 0) {
-            const timer = setTimeout(() => {
-                popOldMessage('info');
-            }, REMOVE_DELAY);
-            return () => clearTimeout(timer);
+            toastRef.current?.show({ severity: 'info', summary: 'Info', detail: info[0], life: SHOW_DELAY });
         }
-    }, [info, popOldMessage]);
+    }, [info]);
 
     useEffect(() => {
         if (success.length > 0) {
-            const timer = setTimeout(() => {
-                popOldMessage('success');
-            }, REMOVE_DELAY);
-            return () => clearTimeout(timer);
+            toastRef.current?.show({ severity: 'success', summary: 'Success', detail: success[0], life: SHOW_DELAY });
         }
-    }, [success, popOldMessage]);
+    }, [success]);
 
     useEffect(() => {
         if (error.length > 0) {
-            const timer = setTimeout(() => {
-                popOldMessage('error');
-            }, REMOVE_DELAY);
-            return () => clearTimeout(timer);
+            toastRef.current?.show({ severity: 'error', summary: 'Error', detail: error[0], life: SHOW_DELAY });
         }
-    }, [error, popOldMessage]);
+    }, [error]);
 
-    const renderMessages = (messages: string[], className: string) => (
-        <ul className={className}>
-            {messages.map((msg, index) => (
-                <li key={index}><span>{msg}</span></li>
-            ))}
-        </ul>
-    );
+    useEffect(() => {
+        const timer = setInterval(() => {
+            if (info.length > 0) popOldMessage('info');
+            if (success.length > 0) popOldMessage('success');
+            if (error.length > 0) popOldMessage('error');
+        }, REMOVE_DELAY);
+        return () => clearInterval(timer);
+    }, [info, success, error, popOldMessage]);
 
     return (
-        <div className={styles.messageBanner}>
-            {error.length > 0 && renderMessages(error, styles.errorList)}
-            {success.length > 0 && renderMessages(success, styles.successList)}
-            {info.length > 0 && renderMessages(info, styles.infoList)}
-        </div>
+        <Toast ref={toastRef} position="top-right" />
     );
 };
