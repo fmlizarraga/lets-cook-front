@@ -77,7 +77,13 @@ export const useBlogStore = () => {
         }
     };
 
-    // TODO setPostApproved
+    const approvePost = async (post: Post) => {
+        savePost({...post, status: 'Approved'}, 'edit');
+    };
+
+    const hidePost = async (post: Post) => {
+        savePost({...post, status: 'Hidden'}, 'edit');
+    };
 
     const setPostDeleted = async (post: Post) => {
         if (!token) throw new Error("You must be signed in to perform this action");
@@ -146,6 +152,8 @@ export const useBlogStore = () => {
         clearTagsFilter,
         getFilteredPosts,
         savePost,
+        approvePost,
+        hidePost,
         setPostDeleted,
         addPostComment,
         updatePostComment,

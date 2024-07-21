@@ -10,7 +10,7 @@ import { Tag } from 'primereact/tag';
 import { useAuthStore, useBlogStore, useUIStore } from "../hooks";
 import { BlogNav, CommentSection } from '../components';
 import { getNTagsAsStrings, sanitizeHTML } from '../utils/blog';
-import { canEditPost } from '../utils/user';
+import { canEditPost, isMod } from '../utils/user';
 import { copyContent } from '../utils/ui';
 
 import styles from './PostDetail.module.css';
@@ -56,7 +56,12 @@ export function PostDetail() {
             command: handleEditOption
           }
         ],
-      }
+      },
+      {
+        separator: true,
+        visible: isMod(user)
+      },
+
     ];
 
     const header = (

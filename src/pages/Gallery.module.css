@@ -31,9 +31,26 @@
   object-fit: cover;
   border-radius: 6px 0 0 6px;
   cursor: pointer;
+  transition: color 0.3s;
+}
+
+.galleryItemPicture img:hover {
+  color: var(--primary-color);
 }
 
 .galleryItemContent {
   padding: 0;
 }
 
+.galleryItemPicture img::before {
+  height: 7.9rem;
+  width: 396px;
+  margin-bottom: 10px;
+  transform: translateY(-10px);
+}
+
+.galleryItemPicture img::after {
+  font-size: 12rem;
+  margin-left: calc(50% - 6rem);
+  text-align: center;
+}
