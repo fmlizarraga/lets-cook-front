@@ -77,7 +77,7 @@ export const blogSlice = createSlice({
         },
         onDeleteComment: (state, action: PayloadAction<DeleteCommentAction>) => {
             const post = state.posts.find(p => p.id === action.payload.postId);
-            post?.comments?.filter(c => c.id !== action.payload.commentId);
+            if(post) post.comments = post?.comments?.filter(c => c.id !== action.payload.commentId);
         },
     }
 });

@@ -10,6 +10,7 @@ import { canEditPost, getGroupIcon, isMod } from "../utils/user";
 import { useAuthStore, useBlogStore, useUIStore } from "../hooks";
 
 import styles from './CommentItem.module.css';
+import { confirmDialog } from "primereact/confirmdialog";
 
 type PropsTypes = {
     comment: Comment;
@@ -22,7 +23,7 @@ type FormValues = {
 
 export function CommentItem({comment, postId}: PropsTypes) {
     const { user } = useAuthStore();
-    const { approveComment, hideComment, updatePostComment } = useBlogStore();
+    const { approveComment, hideComment, updatePostComment, deletePostComment } = useBlogStore();
     const { pushMessage } = useUIStore();
 
     const [editing, setEditing] = useState<boolean>(false);
@@ -31,6 +32,30 @@ export function CommentItem({comment, postId}: PropsTypes) {
             body:comment.body
         }
     });
+
+    const acceptDelete = async () => {
+        try {
+          await deletePostComment(postId, comment.id || '');
+          pushMessage('success', 'Deleted comment.');
+        } catch (error) {
+          pushMessage('error', 'There was a problem when trying to delete, please try again later.')
+        }
+      };
+  
+      const reject = () => {
+        pushMessage('info', 'Canceled action.')
+      };
+  
+      const confirmDeleteComment = () => {
+        confirmDialog({
+            message: 'Are you sure you want to delete this comment?',
+            header: 'Confirm Comment Deletion',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'reject',
+            accept: acceptDelete,
+            reject
+        });
+      };
 
     const onSubmit: SubmitHandler<FormValues> = async ({ body }) => {
         try {
@@ -46,22 +71,25 @@ export function CommentItem({comment, postId}: PropsTypes) {
     const commentOptionsMenu = useRef<Menu>(null);
     const modMenu = (show: boolean): MenuItem => {
         if(show) return {
-            label: 'Mod options',
-            visible: isMod(user),
+            label: 'Moderation',
             items: [
                 {
                     label: comment.status === 'Hidden' ? 'Show' : 'Approbe',
                     icon: comment.status === 'Hidden' ? 'pi pi-eye' : 'pi pi-check-square',
-                    visible: isMod(user),
                     disabled: comment.status === 'Approved',
-                    command: () => approveComment(postId, comment)
+                    command: () => {
+                        approveComment(postId, comment);
+                        pushMessage('info', 'Comment Approved / Visible');
+                    }
                 },
                 {
                     label: 'Hide',
                     icon: 'pi pi-eye-slash',
-                    visible: isMod(user),
                     disabled: comment.status === 'Hidden',
-                    command: () => hideComment(postId, comment)
+                    command: () => {
+                        hideComment(postId, comment);
+                        pushMessage('info', 'Comment Hidden');
+                    }
                 }
             ]
         }
@@ -84,7 +112,8 @@ export function CommentItem({comment, postId}: PropsTypes) {
                 {
                     label: 'Delete',
                     icon: 'pi pi-trash',
-                    visible: canEditPost(user, comment.author)
+                    visible: canEditPost(user, comment.author),
+                    command: confirmDeleteComment
                 },
             ]
         },
