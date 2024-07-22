@@ -54,8 +54,10 @@ export const useBlogStore = () => {
         const categories = tagFilter.split(' ');
 
         return posts.filter(post =>
-            post.tags.some(tag =>
-                categories.includes(tag.value)
+            categories.every(category =>
+                post.tags.some(tag =>
+                    tag.value === category
+                )
             )
         );
     };

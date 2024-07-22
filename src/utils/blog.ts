@@ -10,28 +10,28 @@ export const newTag = (str: string): Tag => {
     str = str.toLowerCase().trim();
     if (isValidTag(str)) return { value: str };
     throw new Error("Incorrect Format");
-  };
+};
   
-  export const getNTagsAsStrings = (tags: Tag[], n: number): string[] => {
+export const getNTagsAsStrings = (tags: Tag[], n: number): string[] => {
     return tags.slice(0, n).map(tag => tag.value);
-  };
+};
   
-  export const getTagsAsString = (tags: Tag[]): string => {
+export const getTagsAsString = (tags: Tag[]): string => {
     let tagsString = '';
     tags.forEach(tag => tagsString += tag.value);
     return tagsString;
-  };
+};
 
-  export const getTagsFromString = (tagsString: string): Tag[] => {
+export const getTagsFromString = (tagsString: string): Tag[] => {
     return tagsString.split(' ').map(t => newTag(t));
-  };
+};
 
 export const newComment = (body: string, author: User):Comment => {
-  return {
-    author,
-    body,
-    likes: 0,
-    status: 'Pending',
-    timeStamp: Date.now(),
-  };
+    return {
+        author,
+        body,
+        likes: 0,
+        status: 'Pending',
+        timeStamp: Date.now(),
+    };
 };
