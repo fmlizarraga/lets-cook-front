@@ -2,6 +2,8 @@
 
 Welcome to "Let's Cook!", a single-page application (SPA) for sharing and discovering cooking recipes. This frontend project is built with React, Redux Toolkit, and React Router. The project is designed with a repository pattern to facilitate easy switching of data providers. Currently, a local repository is used for development purposes, but the project is set up to integrate an API in the future.
 
+[Check it online!](https://lets-cook-front.onrender.com)
+
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
@@ -21,7 +23,7 @@ To run this project locally, follow these steps:
 
 2. **Install the dependencies:**
     ```sh
-    yarn add
+    yarn install
     ```
 
 3. **Start the development server:**
